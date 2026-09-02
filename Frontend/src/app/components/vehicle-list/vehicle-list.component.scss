@@ -1,0 +1,189 @@
+.vehicle-sidebar {
+  width: 280px;
+  background-color: var(--bg-sidebar-light);
+  border-right: 1px solid var(--border-light);
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+
+  .search-box {
+    padding: 16px;
+    position: relative;
+
+    .search-icon {
+      position: absolute;
+      left: 28px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 16px;
+      height: 16px;
+      color: #9ca3af;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px 12px 10px 36px;
+      border-radius: 8px;
+      border: 1px solid #e5e7eb;
+      background-color: #ffffff;
+      font-size: 13px;
+      outline: none;
+
+      &:focus {
+        border-color: var(--primary-blue);
+      }
+    }
+  }
+
+  .list-container {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0 12px;
+
+    .category-section {
+      margin-bottom: 16px;
+
+      .category-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 11px;
+        font-weight: 700;
+        color: #6b7280;
+        letter-spacing: 0.5px;
+        padding: 8px 6px;
+        cursor: pointer;
+
+        .chevron {
+          width: 14px;
+          height: 14px;
+          transition: transform 0.2s ease;
+
+          &.rotated {
+            transform: rotate(-90deg);
+          }
+        }
+      }
+
+      .items-list {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+
+        .driver-card {
+          display: flex;
+          align-items: center;
+          padding: 8px 10px;
+          border-radius: 10px;
+          cursor: pointer;
+          transition: background 0.15s ease;
+          position: relative;
+
+          &:hover {
+            background-color: #f3f4f6;
+          }
+
+          &.selected {
+            background-color: #ffffff;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+
+            &::before {
+              content: '';
+              position: absolute;
+              left: 0;
+              top: 10px;
+              bottom: 10px;
+              width: 3px;
+              background-color: var(--primary-blue);
+              border-radius: 2px;
+            }
+          }
+
+          .avatar {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 10px;
+          }
+
+          .driver-info {
+            flex: 1;
+            min-width: 0;
+
+            .name {
+              font-size: 13px;
+              font-weight: 600;
+              color: var(--text-dark);
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+            }
+
+            .model {
+              font-size: 11px;
+              color: var(--text-muted);
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+            }
+          }
+
+          .status-badge {
+            font-size: 9px;
+            font-weight: 700;
+            padding: 3px 6px;
+            border-radius: 4px;
+            white-space: nowrap;
+            letter-spacing: 0.3px;
+
+            &.on-the-way {
+              background-color: #eff6ff;
+              color: #2563eb;
+            }
+
+            &.loading {
+              background-color: #fef3c7;
+              color: #d97706;
+            }
+
+            &.waiting {
+              background-color: #fee2e2;
+              color: #dc2626;
+            }
+
+            &.unloading {
+              background-color: #f3e8ff;
+              color: #7c3aed;
+            }
+
+            .exclamation {
+              font-weight: 900;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .add-vehicle-btn-container {
+    padding: 16px;
+    background-color: var(--bg-sidebar-light);
+    border-top: 1px solid var(--border-light);
+
+    .add-btn {
+      width: 100%;
+      padding: 12px;
+      background-color: #0d0e11;
+      color: #ffffff;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      transition: background 0.2s ease;
+
+      &:hover {
+        background-color: #1f2937;
+      }
+    }
+  }
+}

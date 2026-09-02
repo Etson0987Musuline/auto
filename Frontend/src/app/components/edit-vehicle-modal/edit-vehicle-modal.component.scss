@@ -1,0 +1,98 @@
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(15, 23, 42, 0.5);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+
+  .modal-card {
+    background-color: #ffffff;
+    border-radius: 16px;
+    width: 440px;
+    max-width: 90vw;
+    padding: 24px;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+
+      h3 {
+        font-size: 18px;
+        font-weight: 700;
+        color: #0f172a;
+      }
+
+      .close-btn {
+        font-size: 18px;
+        color: #94a3b8;
+        &:hover { color: #0f172a; }
+      }
+    }
+
+    .modal-form {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+
+        label {
+          font-size: 12px;
+          font-weight: 600;
+          color: #475569;
+        }
+
+        input, select {
+          padding: 10px 12px;
+          border-radius: 8px;
+          border: 1px solid #cbd5e1;
+          font-size: 14px;
+          outline: none;
+
+          &:focus {
+            border-color: var(--primary-blue);
+          }
+        }
+      }
+
+      .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+
+      .modal-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 12px;
+        margin-top: 12px;
+
+        button {
+          padding: 10px 16px;
+          border-radius: 8px;
+          font-size: 13px;
+          font-weight: 600;
+
+          &.cancel-btn {
+            background-color: #f1f5f9;
+            color: #475569;
+          }
+
+          &.submit-btn {
+            background-color: var(--primary-blue);
+            color: #ffffff;
+          }
+        }
+      }
+    }
+  }
+}

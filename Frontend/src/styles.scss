@@ -1,0 +1,62 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --bg-app: #eef1f5;
+  --bg-card: #ffffff;
+  --bg-sidebar-dark: #111317;
+  --bg-sidebar-light: #f8f9fc;
+  
+  --primary-blue: #2563eb;
+  --primary-blue-light: #eff6ff;
+  --primary-blue-hover: #1d4ed8;
+
+  --text-dark: #111827;
+  --text-muted: #6b7280;
+  --text-light: #9ca3af;
+
+  --badge-on-way-bg: #eff6ff;
+  --badge-on-way-text: #2563eb;
+  
+  --badge-loading-bg: #fef3c7;
+  --badge-loading-text: #d97706;
+
+  --badge-waiting-bg: #fee2e2;
+  --badge-waiting-text: #dc2626;
+
+  --badge-unloading-bg: #f3e8ff;
+  --badge-unloading-text: #7c3aed;
+
+  --border-light: #e5e7eb;
+  --radius-lg: 16px;
+  --radius-md: 10px;
+  --radius-sm: 6px;
+
+  --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.06);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body, html {
+  height: 100%;
+  font-family: var(--font-family);
+  background-color: var(--bg-app);
+  color: var(--text-dark);
+  -webkit-font-smoothing: antialiased;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+input {
+  font-family: inherit;
+}

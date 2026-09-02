@@ -1,0 +1,115 @@
+<div class="app-layout">
+  <!-- 1. Left Dark Sidebar -->
+  <app-sidebar [activeNav]="activeNav" (navChange)="onNavChange($event)"></app-sidebar>
+
+  <!-- 2. Fleet Drivers Sidebar (Visible in 'van' view) -->
+  <app-vehicle-list
+    *ngIf="activeNav === 'van'"
+    [vehicles]="vehicles"
+    [selectedVehicle]="selectedVehicle"
+    (selectVehicle)="onSelectVehicle($event)"
+    (openAddModal)="openAddModal()">
+  </app-vehicle-list>
+
+  <!-- 3. Main Workspace Views -->
+  <main class="main-content">
+    <!-- Top Database Connection Badge -->
+    <div class="db-status-bar" [class.connected]="dbStatus.connected">
+      <span class="status-dot"></span>
+      <span>{{ dbStatus.message }}</span>
+      <button class="retry-btn" (click)="checkDb()">Refresh DB</button>
+    </div>
+
+    <!-- VIEW 1: Fleet Vehicles Dashboard (Default 'van') -->
+    <div class="content-wrapper" *ngIf="activeNav === 'van'">
+      <app-vehicle-header-card
+        [vehicle]="selectedVehicle"
+        (editVehicle)="openEditModal()"
+        (deleteVehicle)="onDeleteVehicle($event)">
+      </app-vehicle-header-card>
+
+      <div class="dashboard-grid">
+        <div class="card routes-card">
+          <app-routes-card [routes]="routes"></app-routes-card>
+        </div>
+
+        <div class="card stats-card">
+          <app-driver-stats [stats]="driverStats"></app-driver-stats>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIEW 2: Messages / Driver Inbox ('messages') -->
+    <div class="view-container" *ngIf="activeNav === 'messages'">
+      <app-messages-view></app-messages-view>
+    </div>
+
+    <!-- VIEW 3: Routes Map ('route') -->
+    <div class="view-container" *ngIf="activeNav === 'route'">
+      <app-generic-view
+        title="Interactive Fleet Map & Routes"
+        description="Real-time GPS tracking and live shipment route management."
+        icon="📍">
+      </app-generic-view>
+    </div>
+
+    <!-- VIEW 4: Overview Dashboard ('home') -->
+    <div class="view-container" *ngIf="activeNav === 'home'">
+      <app-generic-view
+        title="System Overview Dashboard"
+        description="High-level metrics, active fleet status, and performance summary."
+        icon="🏠">
+      </app-generic-view>
+    </div>
+
+    <!-- VIEW 5: Documents ('docs') -->
+    <div class="view-container" *ngIf="activeNav === 'docs'">
+      <app-generic-view
+        title="Fleet Compliance & Documents"
+        description="Driver licenses, vehicle registration certificates, and insurance policies."
+        icon="📄">
+      </app-generic-view>
+    </div>
+
+    <!-- VIEW 6: Analytics ('analytics') -->
+    <div class="view-container" *ngIf="activeNav === 'analytics'">
+      <app-generic-view
+        title="Fleet Performance Analytics"
+        description="Fuel efficiency, delivery time trends, and vehicle maintenance reports."
+        icon="📊">
+      </app-generic-view>
+    </div>
+
+    <!-- VIEW 7: Alerts ('alerts') -->
+    <div class="view-container" *ngIf="activeNav === 'alerts'">
+      <app-generic-view
+        title="System Alerts & Maintenance"
+        description="Active warnings, route delay notifications, and vehicle service schedules."
+        icon="🔔">
+      </app-generic-view>
+    </div>
+
+    <!-- VIEW 8: Profile / Settings ('profile') -->
+    <div class="view-container" *ngIf="activeNav === 'profile'">
+      <app-generic-view
+        title="User Profile & Settings"
+        description="Administrator account options, PostgreSQL credentials, and system configuration."
+        icon="👤">
+      </app-generic-view>
+    </div>
+  </main>
+
+  <!-- Modals -->
+  <app-add-vehicle-modal
+    *ngIf="isAddModalOpen"
+    (closeModal)="closeModals()"
+    (saveVehicle)="onSaveVehicle($event)">
+  </app-add-vehicle-modal>
+
+  <app-edit-vehicle-modal
+    *ngIf="isEditModalOpen && selectedVehicle"
+    [vehicle]="selectedVehicle"
+    (closeModal)="closeModals()"
+    (updateVehicle)="onUpdateVehicle($event)">
+  </app-edit-vehicle-modal>
+</div>

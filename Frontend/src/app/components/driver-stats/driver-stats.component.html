@@ -1,0 +1,108 @@
+<div class="stats-container" *ngIf="stats">
+  <div class="stats-header">
+    <h3 class="section-title">Driver Statistics</h3>
+    <button class="expand-btn" title="Expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"></path></svg></button>
+  </div>
+
+  <!-- Category Time Section -->
+  <div class="category-section">
+    <div class="sub-header">
+      <span class="sub-title">AVERAGE TIME PER DAY BY CATEGORY</span>
+      <div class="time-toggles">
+        <span [class.active]="activeFilter === 'W'" (click)="setFilter('W')">W</span>
+        <span [class.active]="activeFilter === 'M'" (click)="setFilter('M')">M</span>
+        <span [class.active]="activeFilter === '6M'" (click)="setFilter('6M')">6M</span>
+        <span [class.active]="activeFilter === 'Y'" (click)="setFilter('Y')">Y</span>
+      </div>
+    </div>
+
+    <!-- Multi-segmented Progress Bar -->
+    <div class="progress-segmented-bar">
+      <div class="segment on-way" [style.width.%]="stats.onTheWayPercent">
+        <span class="label-pct">{{ stats.onTheWayPercent }}%</span>
+      </div>
+      <div class="segment unloading" [style.width.%]="stats.unloadingPercent">
+        <span class="label-pct">{{ stats.unloadingPercent }}%</span>
+      </div>
+      <div class="segment loading" [style.width.%]="stats.loadingPercent">
+        <span class="label-pct">{{ stats.loadingPercent }}%</span>
+      </div>
+      <div class="segment waiting" [style.width.%]="stats.waitingPercent">
+        <span class="label-pct">{{ stats.waitingPercent }}%</span>
+      </div>
+    </div>
+
+    <!-- Category Breakdown Rows -->
+    <div class="breakdown-table">
+      <div class="row">
+        <span class="cat-name">On the Way</span>
+        <span class="cat-time">{{ stats.onTheWayTime }}</span>
+        <span class="cat-pct">{{ stats.onTheWayPercent }}%</span>
+      </div>
+      <div class="row">
+        <span class="cat-name">Unloading</span>
+        <span class="cat-time">{{ stats.unloadingTime }}</span>
+        <span class="cat-pct">{{ stats.unloadingPercent }}%</span>
+      </div>
+      <div class="row">
+        <span class="cat-name">Loading</span>
+        <span class="cat-time">{{ stats.loadingTime }}</span>
+        <span class="cat-pct">{{ stats.loadingPercent }}%</span>
+      </div>
+      <div class="row">
+        <span class="cat-name">Waiting</span>
+        <span class="cat-time">{{ stats.waitingTime }}</span>
+        <span class="cat-pct">{{ stats.waitingTime }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Working Time Per Day Bar Chart -->
+  <div class="chart-section">
+    <div class="sub-header">
+      <span class="sub-title">WORKING TIME PER DAY</span>
+      <div class="time-toggles">
+        <span [class.active]="activeFilter === 'W'" (click)="setFilter('W')">W</span>
+        <span [class.active]="activeFilter === 'M'" (click)="setFilter('M')">M</span>
+        <span [class.active]="activeFilter === '6M'" (click)="setFilter('6M')">6M</span>
+        <span [class.active]="activeFilter === 'Y'" (click)="setFilter('Y')">Y</span>
+      </div>
+    </div>
+
+    <!-- Bar Chart Canvas -->
+    <div class="bar-chart-wrapper">
+      <!-- Tooltip popup when bar hovered -->
+      <div class="chart-tooltip" *ngIf="hoveredIndex !== null">
+        <div class="tooltip-row"><span class="date">{{ stats.chartData[hoveredIndex].label }}</span> <span class="val">{{ stats.chartData[hoveredIndex].timeText }}</span></div>
+        <div class="tooltip-row"><span class="avg">Average</span> <span class="val">{{ stats.chartData[hoveredIndex].avgText }}</span></div>
+      </div>
+
+      <div class="bars-container">
+        <div 
+          *ngFor="let point of stats.chartData; let i = index" 
+          class="bar-group" 
+          [class.active]="hoveredIndex === i"
+          (mouseenter)="onBarHover(i)" 
+          (mouseleave)="onBarHover(null)">
+          
+          <div class="bar-pair">
+            <div class="bar avg-bar" [style.height.%]="(point.avgWorkingHours / 10) * 100"></div>
+            <div class="bar work-bar" [style.height.%]="(point.workingHours / 10) * 100"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="y-axis">
+        <span>8</span>
+        <span>4</span>
+        <span>0</span>
+      </div>
+    </div>
+
+    <!-- Legend -->
+    <div class="chart-legend">
+      <span class="legend-item"><span class="dot work-dot"></span> Working Time</span>
+      <span class="legend-item"><span class="dot avg-dot"></span> Average Working Time</span>
+    </div>
+  </div>
+</div>

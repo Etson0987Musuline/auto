@@ -1,0 +1,98 @@
+<div class="vehicle-sidebar">
+  <div class="search-box">
+    <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+    <input type="text" placeholder="Search..." [(ngModel)]="searchQuery">
+  </div>
+
+  <div class="list-container">
+    <!-- FAVORITES -->
+    <div class="category-section">
+      <div class="category-header" (click)="expandedFavorites = !expandedFavorites">
+        <span>⭐ FAVORITES</span>
+        <svg class="chevron" [class.rotated]="!expandedFavorites" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+      </div>
+
+      <div class="items-list" *ngIf="expandedFavorites">
+        <div 
+          *ngFor="let item of favorites" 
+          class="driver-card" 
+          [class.selected]="selectedVehicle?.id === item.id"
+          (click)="onSelect(item)">
+          
+          <img [src]="getAvatar(item.driverName)" [alt]="item.driverName" class="avatar">
+          
+          <div class="driver-info">
+            <div class="name">{{ item.driverName }}</div>
+            <div class="model">{{ item.vehicleModel }}</div>
+          </div>
+
+          <span class="status-badge" [ngClass]="item.status.toLowerCase().replace(' ', '-')">
+            <span *ngIf="item.status === 'WAITING'" class="exclamation">! </span>{{ item.status }}
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- TRUCKS -->
+    <div class="category-section">
+      <div class="category-header" (click)="expandedTrucks = !expandedTrucks">
+        <span>TRUCKS</span>
+        <svg class="chevron" [class.rotated]="!expandedTrucks" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+      </div>
+
+      <div class="items-list" *ngIf="expandedTrucks">
+        <div 
+          *ngFor="let item of trucks" 
+          class="driver-card"
+          [class.selected]="selectedVehicle?.id === item.id"
+          (click)="onSelect(item)">
+          
+          <img [src]="getAvatar(item.driverName)" [alt]="item.driverName" class="avatar">
+          
+          <div class="driver-info">
+            <div class="name">{{ item.driverName }}</div>
+            <div class="model">{{ item.vehicleModel }}</div>
+          </div>
+
+          <span class="status-badge" [ngClass]="item.status.toLowerCase().replace(' ', '-')">
+            {{ item.status }}
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- VANS -->
+    <div class="category-section">
+      <div class="category-header" (click)="expandedVans = !expandedVans">
+        <span>VANS</span>
+        <svg class="chevron" [class.rotated]="!expandedVans" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+      </div>
+
+      <div class="items-list" *ngIf="expandedVans">
+        <div 
+          *ngFor="let item of vans" 
+          class="driver-card"
+          [class.selected]="selectedVehicle?.id === item.id"
+          (click)="onSelect(item)">
+          
+          <img [src]="getAvatar(item.driverName)" [alt]="item.driverName" class="avatar">
+          
+          <div class="driver-info">
+            <div class="name">{{ item.driverName }}</div>
+            <div class="model">{{ item.vehicleModel }}</div>
+          </div>
+
+          <span class="status-badge" [ngClass]="item.status.toLowerCase().replace(' ', '-')">
+            {{ item.status }}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="add-vehicle-btn-container">
+    <button class="add-btn" (click)="onAddClick()">
+      <span>+ Add New Vehicle</span>
+    </button>
+  </div>
+</div>

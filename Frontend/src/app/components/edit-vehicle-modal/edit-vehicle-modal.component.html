@@ -1,0 +1,58 @@
+<div class="modal-overlay" (click)="onClose()">
+  <div class="modal-card" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h3>Edit Vehicle / Driver</h3>
+      <button class="close-btn" (click)="onClose()">✕</button>
+    </div>
+
+    <form (ngSubmit)="onSubmit()" class="modal-form">
+      <div class="form-group">
+        <label>Driver Name</label>
+        <input type="text" [(ngModel)]="driverName" name="driverName" required>
+      </div>
+
+      <div class="form-group">
+        <label>Vehicle Model</label>
+        <input type="text" [(ngModel)]="vehicleModel" name="vehicleModel" required>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Category</label>
+          <select [(ngModel)]="category" name="category">
+            <option value="FAVORITES">FAVORITES</option>
+            <option value="TRUCKS">TRUCKS</option>
+            <option value="VANS">VANS</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Status</label>
+          <select [(ngModel)]="status" name="status">
+            <option value="ON THE WAY">ON THE WAY</option>
+            <option value="LOADING">LOADING</option>
+            <option value="WAITING">WAITING</option>
+            <option value="UNLOADING">UNLOADING</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Payload</label>
+          <input type="text" [(ngModel)]="payload" name="payload">
+        </div>
+
+        <div class="form-group">
+          <label>License Plate</label>
+          <input type="text" [(ngModel)]="licensePlate" name="licensePlate">
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button type="button" class="cancel-btn" (click)="onClose()">Cancel</button>
+        <button type="submit" class="submit-btn">Update Vehicle</button>
+      </div>
+    </form>
+  </div>
+</div>

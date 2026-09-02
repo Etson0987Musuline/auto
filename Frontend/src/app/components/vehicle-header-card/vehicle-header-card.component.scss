@@ -1,0 +1,218 @@
+.driver-header-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  .top-driver-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .driver-profile {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+
+      .driver-avatar {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+
+      .driver-text {
+        .driver-name {
+          font-size: 16px;
+          font-weight: 700;
+          color: var(--text-dark);
+        }
+
+        .driver-id {
+          font-size: 12px;
+          color: var(--text-muted);
+        }
+      }
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+
+      .action-btn {
+        height: 34px;
+        padding: 0 12px;
+        border-radius: 8px;
+        font-size: 12px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        border: 1px solid #e5e7eb;
+        background: #ffffff;
+        cursor: pointer;
+        transition: all 0.2s ease;
+
+        svg {
+          width: 14px;
+          height: 14px;
+        }
+
+        &.edit-btn {
+          color: #2563eb;
+          border-color: #bfdbfe;
+          background: #eff6ff;
+
+          &:hover {
+            background: #dbeafe;
+          }
+        }
+
+        &.delete-btn {
+          color: #dc2626;
+          border-color: #fecaca;
+          background: #fef2f2;
+
+          &:hover {
+            background: #fee2e2;
+          }
+        }
+      }
+
+      .icon-btn {
+        width: 34px;
+        height: 34px;
+        border-radius: 8px;
+        background: #ffffff;
+        border: 1px solid #e5e7eb;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #4b5563;
+        transition: all 0.2s ease;
+
+        svg {
+          width: 16px;
+          height: 16px;
+        }
+
+        &:hover {
+          background-color: #f9fafb;
+          color: var(--text-dark);
+        }
+      }
+    }
+  }
+
+  .vehicle-card-banner {
+    background: #f8fafc;
+    border-radius: 16px;
+    padding: 24px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+    min-height: 200px;
+    border: 1px solid #e2e8f0;
+
+    .specs-side {
+      flex: 1;
+      max-width: 450px;
+      z-index: 2;
+
+      .vehicle-title {
+        font-size: 18px;
+        font-weight: 700;
+        margin-bottom: 20px;
+        color: #1e293b;
+      }
+
+      .specs-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px 24px;
+        margin-bottom: 24px;
+
+        .spec-item {
+          display: flex;
+          flex-direction: column;
+
+          .label {
+            font-size: 11px;
+            color: #94a3b8;
+            font-weight: 500;
+            margin-bottom: 2px;
+          }
+
+          .value {
+            font-size: 16px;
+            font-weight: 700;
+            color: #0f172a;
+          }
+        }
+      }
+
+      .tag-docs {
+        display: flex;
+        align-items: center;
+        gap: 24px;
+
+        .license-tag {
+          background: #ffffff;
+          border: 1px solid #cbd5e1;
+          border-radius: 6px;
+          padding: 4px 8px;
+          display: inline-flex;
+          flex-direction: column;
+          align-items: center;
+          box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+
+          .state {
+            font-size: 7px;
+            text-transform: uppercase;
+            color: #dc2626;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+          }
+
+          .plate-num {
+            font-size: 14px;
+            font-weight: 800;
+            color: #1e293b;
+            letter-spacing: 1px;
+            font-family: 'Courier New', monospace;
+          }
+        }
+
+        .docs-link {
+          font-size: 12px;
+          color: #64748b;
+          text-decoration: underline;
+          text-decoration-style: dashed;
+          font-weight: 500;
+
+          &:hover {
+            color: var(--primary-blue);
+          }
+        }
+      }
+    }
+
+    .vehicle-image-side {
+      flex: 1;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      z-index: 1;
+
+      .van-img {
+        max-width: 380px;
+        width: 100%;
+        height: auto;
+        object-fit: contain;
+        filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.08));
+      }
+    }
+  }
+}

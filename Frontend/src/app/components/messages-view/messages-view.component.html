@@ -1,0 +1,31 @@
+<div class="messages-page">
+  <div class="messages-sidebar">
+    <div class="header">
+      <h2>Driver Inbox</h2>
+    </div>
+    <div class="msg-list">
+      <div 
+        *ngFor="let item of messages" 
+        class="msg-item"
+        [class.active]="selectedMessage.id === item.id"
+        [class.unread]="item.unread"
+        (click)="selectMessage(item)">
+        <div class="msg-top">
+          <span class="sender">{{ item.sender }}</span>
+          <span class="time">{{ item.time }}</span>
+        </div>
+        <p class="preview">{{ item.preview }}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="messages-detail">
+    <div class="detail-header">
+      <h3>{{ selectedMessage.sender }}</h3>
+      <span class="detail-time">{{ selectedMessage.time }}</span>
+    </div>
+    <div class="detail-body">
+      <p>{{ selectedMessage.preview }}</p>
+    </div>
+  </div>
+</div>

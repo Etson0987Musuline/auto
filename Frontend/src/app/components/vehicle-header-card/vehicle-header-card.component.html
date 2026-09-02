@@ -1,0 +1,65 @@
+<div class="driver-header-container" *ngIf="vehicle">
+  <!-- Top Driver Info Bar -->
+  <div class="top-driver-bar">
+    <div class="driver-profile">
+      <img [src]="avatarUrl" [alt]="vehicle.driverName" class="driver-avatar">
+      <div class="driver-text">
+        <h2 class="driver-name">{{ vehicle.driverName }}</h2>
+        <span class="driver-id">ID: {{ vehicle.driverIdCode || '236-542-097' }}</span>
+      </div>
+    </div>
+
+    <div class="header-actions">
+      <button class="action-btn edit-btn" (click)="onEdit()" title="Edit Driver/Vehicle">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+        <span>Edit</span>
+      </button>
+
+      <button class="action-btn delete-btn" (click)="onDelete()" title="Delete Vehicle">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+        <span>Delete</span>
+      </button>
+
+      <button class="icon-btn" title="Message"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></button>
+      <button class="icon-btn" title="Call"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg></button>
+    </div>
+  </div>
+
+  <!-- Vehicle Spec Card Banner -->
+  <div class="vehicle-card-banner">
+    <div class="specs-side">
+      <h3 class="vehicle-title">{{ vehicle.vehicleModel }}</h3>
+
+      <div class="specs-grid">
+        <div class="spec-item">
+          <span class="label">Payload</span>
+          <span class="value">{{ vehicle.payload || '2,885 lbs' }}</span>
+        </div>
+        <div class="spec-item">
+          <span class="label">Load Volume</span>
+          <span class="value">{{ vehicle.loadVolume || '0.55 in³' }}</span>
+        </div>
+        <div class="spec-item">
+          <span class="label">Load Length</span>
+          <span class="value">{{ vehicle.loadLength || '117 in' }}</span>
+        </div>
+        <div class="spec-item">
+          <span class="label">Load Width</span>
+          <span class="value">{{ vehicle.loadWidth || '67 in' }}</span>
+        </div>
+      </div>
+
+      <div class="tag-docs">
+        <div class="license-tag">
+          <span class="state">JUL California 2022</span>
+          <span class="plate-num">{{ vehicle.licensePlate || '6TRJ244' }}</span>
+        </div>
+        <a class="docs-link" href="#" (click)="$event.preventDefault()">Documents</a>
+      </div>
+    </div>
+
+    <div class="vehicle-image-side">
+      <img [src]="vehicleImageUrl" alt="Vehicle Graphic" class="van-img">
+    </div>
+  </div>
+</div>

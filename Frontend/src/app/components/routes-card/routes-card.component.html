@@ -1,0 +1,74 @@
+<div class="routes-container">
+  <div class="routes-header">
+    <h3 class="section-title">Routes</h3>
+    <button class="history-tab" [class.active]="activeTab === 'history'" (click)="activeTab = activeTab === 'history' ? 'routes' : 'history'">
+      History
+    </button>
+  </div>
+
+  <div class="now-on-way-label">NOW ON THE WAY</div>
+
+  <!-- Active Route Block -->
+  <div class="active-route-block" *ngIf="activeRoute">
+    <div class="route-id-line">
+      <span class="route-code">ID: {{ activeRoute.routeCode }}</span>
+      <span class="dot">•</span>
+      <span class="packages">{{ activeRoute.packageCount }} packages</span>
+    </div>
+
+    <div class="addresses-line">
+      <span class="origin">{{ activeRoute.origin }}</span>
+      <span class="arrow">→</span>
+      <span class="destination">{{ activeRoute.destination }}</span>
+    </div>
+
+    <!-- Map Graphic Canvas Preview -->
+    <div class="map-preview">
+      <div class="map-grid"></div>
+      <svg class="map-svg" viewBox="0 0 400 120">
+        <path d="M 40 80 Q 140 20, 250 50 T 360 40" fill="none" stroke="#2563eb" stroke-width="3" stroke-dasharray="6,4" />
+        <circle cx="40" cy="80" r="6" fill="#000000" />
+        <circle cx="40" cy="80" r="3" fill="#ffffff" />
+        <circle cx="360" cy="40" r="6" fill="#000000" />
+        <path d="M 360 30 L 360 40" stroke="#000000" stroke-width="2"/>
+      </svg>
+    </div>
+
+    <!-- Metrics Row -->
+    <div class="metrics-grid">
+      <div class="metric-item">
+        <span class="label">Distance</span>
+        <span class="value">{{ activeRoute.distance || '0.62 mi' }}</span>
+      </div>
+      <div class="metric-item">
+        <span class="label">Time Left</span>
+        <span class="value">{{ activeRoute.timeLeft || '10 min' }}</span>
+      </div>
+      <div class="metric-item">
+        <span class="label">Weight</span>
+        <span class="value">{{ activeRoute.weight || '2,160 lbs' }}</span>
+      </div>
+      <div class="metric-item">
+        <span class="label">Volume</span>
+        <span class="value">{{ activeRoute.volume || '247 in³' }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Route History Items List -->
+  <div class="history-list">
+    <div class="history-item" *ngFor="let item of historyRoutes">
+      <div class="date-tag" *ngIf="item.dateLabel">{{ item.dateLabel }}</div>
+      <div class="route-id-line">
+        <span class="route-code">ID: {{ item.routeCode }}</span>
+        <span class="dot">•</span>
+        <span class="packages">{{ item.packageCount }} packages</span>
+      </div>
+      <div class="addresses-line">
+        <span class="origin">{{ item.origin }}</span>
+        <span class="arrow">→</span>
+        <span class="destination">{{ item.destination }}</span>
+      </div>
+    </div>
+  </div>
+</div>
