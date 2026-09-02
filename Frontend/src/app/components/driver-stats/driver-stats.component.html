@@ -1,22 +1,35 @@
 <div class="stats-container" *ngIf="stats">
+  <!-- Top Header -->
   <div class="stats-header">
-    <h3 class="section-title">Driver Statistics</h3>
-    <button class="expand-btn" title="Expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"></path></svg></button>
+    <h3 class="section-title">Estadísticas del Conductor</h3>
+    <button class="expand-btn" title="Expandir">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M7 17L17 7M17 7H7M17 7V17"></path>
+      </svg>
+    </button>
   </div>
 
-  <!-- Category Time Section -->
+  <!-- TIEMPO PROMEDIO POR DÍA POR CATEGORÍA -->
   <div class="category-section">
     <div class="sub-header">
-      <span class="sub-title">AVERAGE TIME PER DAY BY CATEGORY</span>
+      <span class="sub-title">TIEMPO PROMEDIO POR DÍA POR CATEGORÍA</span>
       <div class="time-toggles">
-        <span [class.active]="activeFilter === 'W'" (click)="setFilter('W')">W</span>
-        <span [class.active]="activeFilter === 'M'" (click)="setFilter('M')">M</span>
-        <span [class.active]="activeFilter === '6M'" (click)="setFilter('6M')">6M</span>
-        <span [class.active]="activeFilter === 'Y'" (click)="setFilter('Y')">Y</span>
+        <span [class.active]="activeFilter === 'S'" (click)="setFilter('S')" title="Semana">S</span>
+        <span [class.active]="activeFilter === 'M'" (click)="setFilter('M')" title="Mes">M</span>
+        <span [class.active]="activeFilter === '6M'" (click)="setFilter('6M')" title="6 Meses">6M</span>
+        <span [class.active]="activeFilter === 'A'" (click)="setFilter('A')" title="Año">A</span>
       </div>
     </div>
 
-    <!-- Multi-segmented Progress Bar -->
+    <!-- Segment labels on top -->
+    <div class="segment-labels">
+      <span class="lbl on-way" [style.width.%]="stats.onTheWayPercent">En camino</span>
+      <span class="lbl unloading" [style.width.%]="stats.unloadingPercent">Descargando</span>
+      <span class="lbl loading" [style.width.%]="stats.loadingPercent">Cargando</span>
+      <span class="lbl waiting" [style.width.%]="stats.waitingPercent">Esperando</span>
+    </div>
+
+    <!-- Multi-segmented Bar -->
     <div class="progress-segmented-bar">
       <div class="segment on-way" [style.width.%]="stats.onTheWayPercent">
         <span class="label-pct">{{ stats.onTheWayPercent }}%</span>
@@ -32,49 +45,55 @@
       </div>
     </div>
 
-    <!-- Category Breakdown Rows -->
+    <!-- Breakdown Rows -->
     <div class="breakdown-table">
       <div class="row">
-        <span class="cat-name">On the Way</span>
+        <span class="cat-name">En camino</span>
         <span class="cat-time">{{ stats.onTheWayTime }}</span>
         <span class="cat-pct">{{ stats.onTheWayPercent }}%</span>
       </div>
       <div class="row">
-        <span class="cat-name">Unloading</span>
+        <span class="cat-name">Descargando</span>
         <span class="cat-time">{{ stats.unloadingTime }}</span>
         <span class="cat-pct">{{ stats.unloadingPercent }}%</span>
       </div>
       <div class="row">
-        <span class="cat-name">Loading</span>
+        <span class="cat-name">Cargando</span>
         <span class="cat-time">{{ stats.loadingTime }}</span>
         <span class="cat-pct">{{ stats.loadingPercent }}%</span>
       </div>
       <div class="row">
-        <span class="cat-name">Waiting</span>
+        <span class="cat-name">Esperando</span>
         <span class="cat-time">{{ stats.waitingTime }}</span>
-        <span class="cat-pct">{{ stats.waitingTime }}</span>
+        <span class="cat-pct">{{ stats.waitingPercent }}%</span>
       </div>
     </div>
   </div>
 
-  <!-- Working Time Per Day Bar Chart -->
+  <!-- TIEMPO TRABAJADO POR DÍA -->
   <div class="chart-section">
     <div class="sub-header">
-      <span class="sub-title">WORKING TIME PER DAY</span>
+      <span class="sub-title">TIEMPO TRABAJADO POR DÍA</span>
       <div class="time-toggles">
-        <span [class.active]="activeFilter === 'W'" (click)="setFilter('W')">W</span>
-        <span [class.active]="activeFilter === 'M'" (click)="setFilter('M')">M</span>
-        <span [class.active]="activeFilter === '6M'" (click)="setFilter('6M')">6M</span>
-        <span [class.active]="activeFilter === 'Y'" (click)="setFilter('Y')">Y</span>
+        <span [class.active]="activeFilter === 'S'" (click)="setFilter('S')" title="Semana">S</span>
+        <span [class.active]="activeFilter === 'M'" (click)="setFilter('M')" title="Mes">M</span>
+        <span [class.active]="activeFilter === '6M'" (click)="setFilter('6M')" title="6 Meses">6M</span>
+        <span [class.active]="activeFilter === 'A'" (click)="setFilter('A')" title="Año">A</span>
       </div>
     </div>
 
     <!-- Bar Chart Canvas -->
     <div class="bar-chart-wrapper">
-      <!-- Tooltip popup when bar hovered -->
-      <div class="chart-tooltip" *ngIf="hoveredIndex !== null">
-        <div class="tooltip-row"><span class="date">{{ stats.chartData[hoveredIndex].label }}</span> <span class="val">{{ stats.chartData[hoveredIndex].timeText }}</span></div>
-        <div class="tooltip-row"><span class="avg">Average</span> <span class="val">{{ stats.chartData[hoveredIndex].avgText }}</span></div>
+      <!-- Tooltip -->
+      <div class="chart-tooltip" *ngIf="hoveredIndex !== null && stats.chartData[hoveredIndex]">
+        <div class="tooltip-row">
+          <span class="date">{{ stats.chartData[hoveredIndex].label }}</span>
+          <span class="val">{{ stats.chartData[hoveredIndex].timeText }}</span>
+        </div>
+        <div class="tooltip-row">
+          <span class="avg">Promedio</span>
+          <span class="val">{{ stats.chartData[hoveredIndex].avgText }}</span>
+        </div>
       </div>
 
       <div class="bars-container">
@@ -101,8 +120,14 @@
 
     <!-- Legend -->
     <div class="chart-legend">
-      <span class="legend-item"><span class="dot work-dot"></span> Working Time</span>
-      <span class="legend-item"><span class="dot avg-dot"></span> Average Working Time</span>
+      <div class="legend-item">
+        <span class="dot work-dot"></span>
+        <span>Tiempo Trabajado</span>
+      </div>
+      <div class="legend-item">
+        <span class="dot avg-dot"></span>
+        <span>Promedio de Trabajo</span>
+      </div>
     </div>
   </div>
 </div>

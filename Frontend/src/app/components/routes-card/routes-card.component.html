@@ -1,19 +1,18 @@
 <div class="routes-container">
+  <!-- Encabezado -->
   <div class="routes-header">
-    <h3 class="section-title">Routes</h3>
-    <button class="history-tab" [class.active]="activeTab === 'history'" (click)="activeTab = activeTab === 'history' ? 'routes' : 'history'">
-      History
-    </button>
+    <h3 class="section-title">Rutas</h3>
+    <button class="history-tab" (click)="openNewRouteModal()">Historial</button>
   </div>
 
-  <div class="now-on-way-label">NOW ON THE WAY</div>
+  <div class="now-on-way-label">EN CURSO AHORA</div>
 
-  <!-- Active Route Block -->
-  <div class="active-route-block" *ngIf="activeRoute">
+  <!-- Bloque de Ruta Activa con el Mapa Siempre Visible -->
+  <div class="active-route-block">
     <div class="route-id-line">
       <span class="route-code">ID: {{ activeRoute.routeCode }}</span>
       <span class="dot">•</span>
-      <span class="packages">{{ activeRoute.packageCount }} packages</span>
+      <span class="packages">{{ activeRoute.packageCount }} paquetes</span>
     </div>
 
     <div class="addresses-line">
@@ -22,52 +21,112 @@
       <span class="destination">{{ activeRoute.destination }}</span>
     </div>
 
-    <!-- Map Graphic Canvas Preview -->
-    <div class="map-preview">
+    <!-- Canvas Gráfico del Mapa -->
+    <div class="map-preview" (click)="toggleSimulation()" title="Clic para simular avance de ruta">
       <div class="map-grid"></div>
-      <svg class="map-svg" viewBox="0 0 400 120">
-        <path d="M 40 80 Q 140 20, 250 50 T 360 40" fill="none" stroke="#2563eb" stroke-width="3" stroke-dasharray="6,4" />
-        <circle cx="40" cy="80" r="6" fill="#000000" />
-        <circle cx="40" cy="80" r="3" fill="#ffffff" />
-        <circle cx="360" cy="40" r="6" fill="#000000" />
-        <path d="M 360 30 L 360 40" stroke="#000000" stroke-width="2"/>
+      <svg class="map-svg" viewBox="0 0 400 120" preserveAspectRatio="none">
+        <!-- Líneas de Cuadrícula de Calles -->
+        <path d="M 0 30 L 400 30 M 0 60 L 400 60 M 0 90 L 400 90" stroke="#e2e8f0" stroke-width="1" />
+        <path d="M 80 0 L 80 120 M 160 0 L 160 120 M 240 0 L 240 120 M 320 0 L 320 120" stroke="#e2e8f0" stroke-width="1" />
+        
+        <!-- Trayectoria de Ruta -->
+        <path d="M 50 75 L 120 75 L 180 35 L 260 85 L 340 45" fill="none" stroke="#0f172a" stroke-width="2.5" stroke-linejoin="round" />
+
+        <!-- Pin de Inicio (Círculo con flecha/punto) -->
+        <circle cx="50" cy="75" r="8" fill="#0f172a" />
+        <polygon points="48,71 54,75 48,79" fill="#ffffff" />
+
+        <!-- Pin de Destino -->
+        <g transform="translate(340, 45)">
+          <path d="M 0 -14 C -5 -14 -8 -10 -8 -6 C -8 0 0 8 0 8 C 0 8 8 0 8 -6 C 8 -10 5 -14 0 -14 Z" fill="#0f172a" />
+          <circle cx="0" cy="-6" r="3" fill="#ffffff" />
+        </g>
       </svg>
     </div>
 
-    <!-- Metrics Row -->
+    <!-- Cuadrícula de 4 Métricas -->
     <div class="metrics-grid">
       <div class="metric-item">
-        <span class="label">Distance</span>
+        <span class="label">Distancia</span>
         <span class="value">{{ activeRoute.distance || '0.62 mi' }}</span>
       </div>
       <div class="metric-item">
-        <span class="label">Time Left</span>
+        <span class="label">Tiempo Restante</span>
         <span class="value">{{ activeRoute.timeLeft || '10 min' }}</span>
       </div>
       <div class="metric-item">
-        <span class="label">Weight</span>
+        <span class="label">Peso Total</span>
         <span class="value">{{ activeRoute.weight || '2,160 lbs' }}</span>
       </div>
       <div class="metric-item">
-        <span class="label">Volume</span>
+        <span class="label">Volumen</span>
         <span class="value">{{ activeRoute.volume || '247 in³' }}</span>
       </div>
     </div>
   </div>
 
-  <!-- Route History Items List -->
-  <div class="history-list">
-    <div class="history-item" *ngFor="let item of historyRoutes">
-      <div class="date-tag" *ngIf="item.dateLabel">{{ item.dateLabel }}</div>
-      <div class="route-id-line">
-        <span class="route-code">ID: {{ item.routeCode }}</span>
-        <span class="dot">•</span>
-        <span class="packages">{{ item.packageCount }} packages</span>
+  <!-- Lista de Historial de Rutas -->
+  <div class="history-section">
+    <div class="date-header">12/10/22</div>
+
+    <div class="history-list">
+      <div class="history-entry">
+        <div class="entry-title">
+          <span class="entry-code">ID: 109-270</span>
+          <span class="dot">•</span>
+          <span class="entry-pkgs">107 paquetes</span>
+        </div>
+        <div class="entry-address">8900 Murray Ave → 168 W 10th St, Gilroy, CA 95020</div>
       </div>
-      <div class="addresses-line">
-        <span class="origin">{{ item.origin }}</span>
-        <span class="arrow">→</span>
-        <span class="destination">{{ item.destination }}</span>
+
+      <div class="history-entry">
+        <div class="entry-title">
+          <span class="entry-code">ID: 112-791</span>
+          <span class="dot">•</span>
+          <span class="entry-pkgs">86 paquetes</span>
+        </div>
+        <div class="entry-address">230 Mayock Rd → 8225 Arroyo Cir Suite 21, Gilroy, CA 95020</div>
+      </div>
+
+      <div class="history-entry">
+        <div class="entry-title">
+          <span class="entry-code">ID: 128-612</span>
+          <span class="dot">•</span>
+          <span class="entry-pkgs">129 paquetes</span>
+        </div>
+        <div class="entry-address">6215 Engle Way → 905 1st St, Gilroy, CA 95020</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal para Asignar / Agregar Ruta -->
+  <div class="new-route-modal-overlay" *ngIf="isNewRouteModalOpen" (click)="closeNewRouteModal()">
+    <div class="modal-box" (click)="$event.stopPropagation()">
+      <div class="modal-head">
+        <h4>Asignar Nueva Ruta</h4>
+        <button class="close-x" (click)="closeNewRouteModal()">✕</button>
+      </div>
+
+      <div class="modal-form-content">
+        <div class="form-field">
+          <label>Dirección de Origen</label>
+          <input type="text" [(ngModel)]="newRouteOrigin" placeholder="ej. 2972 Westheimer Rd. Santa Ana">
+        </div>
+
+        <div class="form-field">
+          <label>Dirección de Destino</label>
+          <input type="text" [(ngModel)]="newRouteDestination" placeholder="ej. 270 Rucker Ave">
+        </div>
+
+        <div class="form-field">
+          <label>Cantidad de Paquetes</label>
+          <input type="number" [(ngModel)]="newRoutePackages" min="1" max="500">
+        </div>
+
+        <div class="modal-btns">
+          <button class="cancel-action" (click)="closeNewRouteModal()">Cancelar</button>
+          <button class="save-action" (click)="onSaveNewRoute()">Guardar Ruta</button>
+        </div>
       </div>
     </div>
   </div>

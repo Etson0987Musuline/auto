@@ -1,0 +1,223 @@
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.2s ease;
+}
+
+.modal-card {
+  background-color: #ffffff;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 680px;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+}
+
+.modal-header {
+  padding: 20px 24px;
+  border-bottom: 1px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .header-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    .icon {
+      font-size: 24px;
+    }
+
+    h3 {
+      font-size: 17px;
+      font-weight: 700;
+      color: #111827;
+      margin: 0;
+    }
+
+    .subtitle {
+      font-size: 12px;
+      color: #6b7280;
+      margin: 2px 0 0 0;
+    }
+  }
+
+  .close-btn {
+    background: none;
+    border: none;
+    font-size: 18px;
+    color: #9ca3af;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 6px;
+    transition: color 0.15s ease, background-color 0.15s ease;
+
+    &:hover {
+      color: #111827;
+      background-color: #f3f4f6;
+    }
+  }
+}
+
+.modal-body {
+  padding: 20px 24px;
+  overflow-y: auto;
+  flex: 1;
+
+  .documents-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    .doc-card {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 16px;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      background-color: #fafafa;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+      &:hover {
+        border-color: #cbd5e1;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+      }
+
+      .doc-icon {
+        width: 38px;
+        height: 38px;
+        border-radius: 8px;
+        background-color: #eff6ff;
+        color: #2563eb;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+
+        svg {
+          width: 20px;
+          height: 20px;
+        }
+      }
+
+      .doc-info {
+        flex: 1;
+        min-width: 0;
+
+        .doc-title-row {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          margin-bottom: 4px;
+
+          h4 {
+            font-size: 14px;
+            font-weight: 600;
+            color: #1f2937;
+            margin: 0;
+          }
+
+          .status-tag {
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 4px;
+
+            &.vigente {
+              background-color: #ecfdf5;
+              color: #059669;
+            }
+
+            &.por-renovar {
+              background-color: #fffbeb;
+              color: #d97706;
+            }
+
+            &.vencido {
+              background-color: #fef2f2;
+              color: #dc2626;
+            }
+          }
+        }
+
+        .doc-meta {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          font-size: 12px;
+          color: #6b7280;
+
+          strong {
+            color: #374151;
+          }
+        }
+      }
+
+      .doc-actions {
+        .action-btn {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          padding: 8px 12px;
+          border-radius: 8px;
+          border: 1px solid #e5e7eb;
+          background-color: #ffffff;
+          font-size: 12px;
+          font-weight: 600;
+          color: #2563eb;
+          cursor: pointer;
+          transition: all 0.15s ease;
+
+          svg {
+            width: 14px;
+            height: 14px;
+          }
+
+          &:hover {
+            background-color: #eff6ff;
+            border-color: #bfdbfe;
+          }
+        }
+      }
+    }
+  }
+}
+
+.modal-footer {
+  padding: 16px 24px;
+  border-top: 1px solid #e5e7eb;
+  display: flex;
+  justify-content: flex-end;
+
+  .btn-primary {
+    padding: 10px 20px;
+    background-color: #111827;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+
+    &:hover {
+      background-color: #1f2937;
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.98); }
+  to { opacity: 1; transform: scale(1); }
+}

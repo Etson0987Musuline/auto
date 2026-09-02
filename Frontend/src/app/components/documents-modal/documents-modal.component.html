@@ -1,0 +1,60 @@
+<div class="modal-overlay" (click)="onClose()">
+  <div class="modal-card" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <div class="header-title">
+        <span class="icon">📄</span>
+        <div>
+          <h3>Documentos y Pólizas del Vehículo</h3>
+          <p class="subtitle" *ngIf="vehicle">{{ vehicle.vehicleModel }} • Placa: {{ vehicle.licensePlate || '6TRJ244' }} • Conductor: {{ vehicle.driverName }}</p>
+        </div>
+      </div>
+      <button class="close-btn" (click)="onClose()">✕</button>
+    </div>
+
+    <div class="modal-body">
+      <div class="documents-list">
+        <div class="doc-card" *ngFor="let doc of documents">
+          <div class="doc-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="16" y1="13" x2="8" y2="13"></line>
+              <line x1="16" y1="17" x2="8" y2="17"></line>
+            </svg>
+          </div>
+
+          <div class="doc-info">
+            <div class="doc-title-row">
+              <h4>{{ doc.title }}</h4>
+              <span class="status-tag" [ngClass]="doc.status.toLowerCase().replace(' ', '-')">
+                {{ doc.status }}
+              </span>
+            </div>
+            <div class="doc-meta">
+              <span>Tipo: <strong>{{ doc.type }}</strong></span>
+              <span>•</span>
+              <span>Nº: <strong>{{ doc.fileNumber }}</strong></span>
+              <span>•</span>
+              <span>Vencimiento: <strong>{{ doc.expiration }}</strong></span>
+            </div>
+          </div>
+
+          <div class="doc-actions">
+            <button class="action-btn" (click)="downloadDoc(doc)" title="Descargar PDF">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="7 10 12 15 17 10"></polyline>
+                <line x1="12" y1="15" x2="12" y2="3"></line>
+              </svg>
+              <span>Ver / Descargar</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn-primary" (click)="onClose()">Entendido</button>
+    </div>
+  </div>
+</div>

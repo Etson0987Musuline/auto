@@ -23,23 +23,39 @@ export class VehicleListComponent {
   expandedVans = true;
 
   get favorites(): Vehicle[] {
-    return this.filterVehicles(this.vehicles.filter(v => v.category === 'FAVORITES'));
+    return this.filterVehicles(
+      this.vehicles.filter(v => 
+        v.category?.toUpperCase() === 'FAVORITOS' || 
+        v.category?.toUpperCase() === 'FAVORITES'
+      )
+    );
   }
 
   get trucks(): Vehicle[] {
-    return this.filterVehicles(this.vehicles.filter(v => v.category === 'TRUCKS'));
+    return this.filterVehicles(
+      this.vehicles.filter(v => 
+        v.category?.toUpperCase() === 'CAMIONES' || 
+        v.category?.toUpperCase() === 'TRUCKS'
+      )
+    );
   }
 
   get vans(): Vehicle[] {
-    return this.filterVehicles(this.vehicles.filter(v => v.category === 'VANS'));
+    return this.filterVehicles(
+      this.vehicles.filter(v => 
+        v.category?.toUpperCase() === 'FURGONETAS' || 
+        v.category?.toUpperCase() === 'VANS'
+      )
+    );
   }
 
   private filterVehicles(list: Vehicle[]): Vehicle[] {
     if (!this.searchQuery.trim()) return list;
     const q = this.searchQuery.toLowerCase();
     return list.filter(v => 
-      v.driverName.toLowerCase().includes(q) || 
-      v.vehicleModel.toLowerCase().includes(q)
+      (v.driverName && v.driverName.toLowerCase().includes(q)) || 
+      (v.vehicleModel && v.vehicleModel.toLowerCase().includes(q)) ||
+      (v.licensePlate && v.licensePlate.toLowerCase().includes(q))
     );
   }
 
@@ -51,7 +67,31 @@ export class VehicleListComponent {
     this.openAddModal.emit();
   }
 
-  getAvatar(driverName: string): string {
+  getDisplayStatus(status: string): string {
+    const s = (status || '').toUpperCase();
+    if (s === 'ON THE WAY' || s === 'EN CAMINO') return 'EN CAMINO';
+    if (s === 'LOADING' || s === 'CARGANDO') return 'CARGANDO';
+    if (s === 'WAITING' || s === 'ESPERANDO') return 'ESPERANDO';
+    if (s === 'UNLOADING' || s === 'DESCARGANDO') return 'DESCARGANDO';
+    return status || 'EN CAMINO';
+  }
+
+  getStatusClass(status: string): string {
+    const s = (status || '').toUpperCase();
+    if (s === 'ON THE WAY' || s === 'EN CAMINO') return 'en-camino';
+    if (s === 'LOADING' || s === 'CARGANDO') return 'cargando';
+    if (s === 'WAITING' || s === 'ESPERANDO') return 'esperando';
+    if (s === 'UNLOADING' || s === 'DESCARGANDO') return 'descargando';
+    return 'en-camino';
+  }
+
+  isWaiting(status: string): boolean {
+    const s = (status || '').toUpperCase();
+    return s === 'WAITING' || s === 'ESPERANDO';
+  }
+
+  getAvatar(vehicle: Vehicle): string {
+    if (vehicle.avatarUrl) return vehicle.avatarUrl;
     const avatars: Record<string, string> = {
       'Nolan Dokidis': 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80',
       'Ahmad Mango': 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&auto=format&fit=crop&q=80',
@@ -59,11 +99,10 @@ export class VehicleListComponent {
       'Talan Dorwart': 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&auto=format&fit=crop&q=80',
       'Jakob Vetrovs': 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=100&auto=format&fit=crop&q=80',
       'Zain Vetrovs': 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=100&auto=format&fit=crop&q=80',
-      'Jaylon Rhiel Madsen': 'https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?w=100&auto=format&fit=crop&q=80',
       'Gustavo Torff': 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=100&auto=format&fit=crop&q=80',
       'Tiana Westervelt': 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&auto=format&fit=crop&q=80',
       'Zain Korsgaard': 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100&auto=format&fit=crop&q=80'
     };
-    return avatars[driverName] || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&auto=format&fit=crop&q=80';
+    return avatars[vehicle.driverName] || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&auto=format&fit=crop&q=80';
   }
 }

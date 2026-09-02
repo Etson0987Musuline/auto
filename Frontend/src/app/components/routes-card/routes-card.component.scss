@@ -9,77 +9,88 @@
     margin-bottom: 12px;
 
     .section-title {
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 700;
       color: #0f172a;
+      margin: 0;
     }
 
     .history-tab {
       font-size: 12px;
       color: #64748b;
+      background: none;
+      border: none;
+      cursor: pointer;
       text-decoration: underline;
       text-decoration-style: dashed;
       font-weight: 500;
 
-      &.active {
-        color: var(--primary-blue);
+      &:hover {
+        color: #2563eb;
       }
     }
   }
 
   .now-on-way-label {
-    font-size: 10px;
+    font-size: 9.5px;
     font-weight: 800;
     color: #94a3b8;
-    letter-spacing: 0.5px;
-    margin-bottom: 12px;
+    letter-spacing: 0.6px;
+    margin-bottom: 14px;
   }
 
   .active-route-block {
-    margin-bottom: 24px;
+    margin-bottom: 20px;
 
     .route-id-line {
       display: flex;
       align-items: center;
       gap: 6px;
-      font-size: 14px;
-      font-weight: 700;
-      color: #1e293b;
+      font-size: 13.5px;
+      font-weight: 800;
+      color: #0f172a;
       margin-bottom: 4px;
 
       .dot {
         color: #94a3b8;
+        margin: 0 2px;
+      }
+
+      .packages {
+        font-size: 13px;
+        font-weight: 700;
+        color: #0f172a;
       }
     }
 
     .addresses-line {
-      font-size: 12px;
+      font-size: 11.5px;
       color: #64748b;
-      margin-bottom: 16px;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
 
       .arrow {
-        margin: 0 4px;
         color: #94a3b8;
       }
     }
 
     .map-preview {
       width: 100%;
-      height: 120px;
+      height: 110px;
       background-color: #f1f5f9;
       border-radius: 12px;
       position: relative;
       overflow: hidden;
       margin-bottom: 16px;
       border: 1px solid #e2e8f0;
+      cursor: pointer;
 
       .map-grid {
         position: absolute;
         inset: 0;
-        background-image: 
-          linear-gradient(to right, rgba(203, 213, 225, 0.4) 1px, transparent 1px),
-          linear-gradient(to bottom, rgba(203, 213, 225, 0.4) 1px, transparent 1px);
-        background-size: 24px 24px;
+        background-color: #f8fafc;
       }
 
       .map-svg {
@@ -94,53 +105,179 @@
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 12px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid #f1f5f9;
 
       .metric-item {
         display: flex;
         flex-direction: column;
 
         .label {
-          font-size: 11px;
+          font-size: 10.5px;
           color: #94a3b8;
-          margin-bottom: 2px;
+          font-weight: 500;
+          margin-bottom: 3px;
         }
 
         .value {
-          font-size: 14px;
-          font-weight: 700;
+          font-size: 13.5px;
+          font-weight: 800;
           color: #0f172a;
         }
       }
     }
   }
 
-  .history-list {
+  .history-section {
     display: flex;
     flex-direction: column;
-    gap: 16px;
-    border-top: 1px solid #e2e8f0;
-    padding-top: 16px;
+    gap: 10px;
 
-    .history-item {
-      position: relative;
+    .date-header {
+      font-size: 10px;
+      font-weight: 700;
+      color: #94a3b8;
+      letter-spacing: 0.4px;
+    }
 
-      .date-tag {
-        font-size: 11px;
-        font-weight: 600;
-        color: #94a3b8;
-        margin-bottom: 4px;
+    .history-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+
+      .history-entry {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+
+        .entry-title {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          font-size: 12.5px;
+          font-weight: 700;
+          color: #0f172a;
+
+          .dot {
+            color: #94a3b8;
+          }
+
+          .entry-pkgs {
+            font-size: 12px;
+            font-weight: 600;
+            color: #0f172a;
+          }
+        }
+
+        .entry-address {
+          font-size: 11px;
+          color: #64748b;
+        }
+      }
+    }
+  }
+
+  /* Modal Asignar Ruta */
+  .new-route-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+
+    .modal-box {
+      background: #ffffff;
+      border-radius: 14px;
+      width: 420px;
+      max-width: 90vw;
+      padding: 22px;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15);
+
+      .modal-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 16px;
+
+        h4 {
+          margin: 0;
+          font-size: 15px;
+          font-weight: 700;
+          color: #111827;
+        }
+
+        .close-x {
+          background: none;
+          border: none;
+          font-size: 16px;
+          cursor: pointer;
+          color: #9ca3af;
+        }
       }
 
-      .route-id-line {
-        font-size: 13px;
-        font-weight: 700;
-        color: #334155;
-        margin-bottom: 2px;
-      }
+      .modal-form-content {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
 
-      .addresses-line {
-        font-size: 11px;
-        color: #64748b;
+        .form-field {
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+
+          label {
+            font-size: 12px;
+            font-weight: 600;
+            color: #374151;
+          }
+
+          input {
+            padding: 9px 12px;
+            border-radius: 8px;
+            border: 1px solid #cbd5e1;
+            font-size: 13px;
+            outline: none;
+
+            &:focus {
+              border-color: #2563eb;
+            }
+          }
+        }
+
+        .modal-btns {
+          display: flex;
+          justify-content: flex-end;
+          gap: 8px;
+          margin-top: 10px;
+
+          .cancel-action {
+            padding: 8px 14px;
+            background-color: #f1f5f9;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+          }
+
+          .save-action {
+            padding: 8px 16px;
+            background-color: #0d0e11;
+            color: #ffffff;
+            border: none;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+
+            &:hover {
+              background-color: #1f2937;
+            }
+          }
+        }
       }
     }
   }

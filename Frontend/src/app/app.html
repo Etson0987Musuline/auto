@@ -17,7 +17,7 @@
     <div class="db-status-bar" [class.connected]="dbStatus.connected">
       <span class="status-dot"></span>
       <span>{{ dbStatus.message }}</span>
-      <button class="retry-btn" (click)="checkDb()">Refresh DB</button>
+      <button class="retry-btn" (click)="checkDb()">Actualizar Estado DB</button>
     </div>
 
     <!-- VIEW 1: Fleet Vehicles Dashboard (Default 'van') -->
@@ -30,7 +30,10 @@
 
       <div class="dashboard-grid">
         <div class="card routes-card">
-          <app-routes-card [routes]="routes"></app-routes-card>
+          <app-routes-card 
+            [routes]="routes"
+            (assignNewRoute)="onAssignNewRoute($event)">
+          </app-routes-card>
         </div>
 
         <div class="card stats-card">
@@ -47,8 +50,8 @@
     <!-- VIEW 3: Routes Map ('route') -->
     <div class="view-container" *ngIf="activeNav === 'route'">
       <app-generic-view
-        title="Interactive Fleet Map & Routes"
-        description="Real-time GPS tracking and live shipment route management."
+        title="Mapa Interactivo y Seguimiento GPS"
+        description="Monitoreo satelital en tiempo real de rutas y despacho de envíos."
         icon="📍">
       </app-generic-view>
     </div>
@@ -56,8 +59,8 @@
     <!-- VIEW 4: Overview Dashboard ('home') -->
     <div class="view-container" *ngIf="activeNav === 'home'">
       <app-generic-view
-        title="System Overview Dashboard"
-        description="High-level metrics, active fleet status, and performance summary."
+        title="Panel de Control y Resumen General"
+        description="Métricas de alto nivel, estado global de la flota y resumen operativo."
         icon="🏠">
       </app-generic-view>
     </div>
@@ -65,8 +68,8 @@
     <!-- VIEW 5: Documents ('docs') -->
     <div class="view-container" *ngIf="activeNav === 'docs'">
       <app-generic-view
-        title="Fleet Compliance & Documents"
-        description="Driver licenses, vehicle registration certificates, and insurance policies."
+        title="Gestión de Documentos y Cumplimiento"
+        description="Pólizas SOAT, tarjetas de propiedad, revisiones técnicas y licencias de conducir."
         icon="📄">
       </app-generic-view>
     </div>
@@ -74,8 +77,8 @@
     <!-- VIEW 6: Analytics ('analytics') -->
     <div class="view-container" *ngIf="activeNav === 'analytics'">
       <app-generic-view
-        title="Fleet Performance Analytics"
-        description="Fuel efficiency, delivery time trends, and vehicle maintenance reports."
+        title="Analítica de Rendimiento de Flota"
+        description="Eficiencia de combustible, tiempos de entrega y reportes de mantenimiento."
         icon="📊">
       </app-generic-view>
     </div>
@@ -83,8 +86,8 @@
     <!-- VIEW 7: Alerts ('alerts') -->
     <div class="view-container" *ngIf="activeNav === 'alerts'">
       <app-generic-view
-        title="System Alerts & Maintenance"
-        description="Active warnings, route delay notifications, and vehicle service schedules."
+        title="Alertas del Sistema y Mantenimiento"
+        description="Notificaciones de retraso, alertas preventivas y programación de servicios técnicos."
         icon="🔔">
       </app-generic-view>
     </div>
@@ -92,8 +95,8 @@
     <!-- VIEW 8: Profile / Settings ('profile') -->
     <div class="view-container" *ngIf="activeNav === 'profile'">
       <app-generic-view
-        title="User Profile & Settings"
-        description="Administrator account options, PostgreSQL credentials, and system configuration."
+        title="Perfil de Usuario y Configuración"
+        description="Ajustes de cuenta, credenciales de PostgreSQL y configuración general del sistema."
         icon="👤">
       </app-generic-view>
     </div>

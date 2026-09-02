@@ -1,8 +1,10 @@
 import { Controller, Get, Post, Put, Delete, Body, Param } from '@nestjs/common';
 import { VehiclesService } from './vehicles.service';
 import { Vehicle } from './vehicle.entity';
+import { CreateVehicleDto } from './dto/create-vehicle.dto';
+import { UpdateVehicleDto } from './dto/update-vehicle.dto';
 
-@Controller('vehicles')
+@Controller(['vehiculos', 'vehicles'])
 export class VehiclesController {
   constructor(private readonly vehiclesService: VehiclesService) {}
 
@@ -16,22 +18,27 @@ export class VehiclesController {
     return this.vehiclesService.checkDbHealth();
   }
 
+  @Get('salud/db')
+  async checkDbSalud() {
+    return this.vehiclesService.checkDbHealth();
+  }
+
   @Get(':id')
   async findOne(@Param('id') id: string): Promise<Vehicle | null> {
     return this.vehiclesService.findOne(+id);
   }
 
   @Post()
-  async create(@Body() vehicleData: Partial<Vehicle>): Promise<Vehicle> {
-    return this.vehiclesService.create(vehicleData);
+  async create(@Body() dto: CreateVehicleDto): Promise<Vehicle> {
+    return this.vehiclesService.create(dto);
   }
 
   @Put(':id')
   async update(
     @Param('id') id: string,
-    @Body() vehicleData: Partial<Vehicle>,
+    @Body() dto: UpdateVehicleDto,
   ): Promise<Vehicle | null> {
-    return this.vehiclesService.update(+id, vehicleData);
+    return this.vehiclesService.update(+id, dto);
   }
 
   @Delete(':id')

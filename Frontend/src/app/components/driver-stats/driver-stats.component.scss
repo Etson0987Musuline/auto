@@ -6,19 +6,25 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
 
     .section-title {
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 700;
       color: #0f172a;
+      margin: 0;
     }
 
     .expand-btn {
-      color: #64748b;
+      color: #0f172a;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 2px;
+
       svg {
-        width: 18px;
-        height: 18px;
+        width: 16px;
+        height: 16px;
       }
     }
   }
@@ -27,57 +33,71 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
 
     .sub-title {
-      font-size: 10px;
+      font-size: 9.5px;
       font-weight: 800;
       color: #94a3b8;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.6px;
     }
 
     .time-toggles {
       display: flex;
-      gap: 8px;
+      gap: 10px;
 
       span {
-        font-size: 11px;
+        font-size: 10.5px;
         color: #94a3b8;
-        font-weight: 600;
+        font-weight: 700;
         cursor: pointer;
+        padding: 0 1px;
 
         &.active {
           color: #0f172a;
-          border-bottom: 2px solid #0f172a;
         }
       }
     }
   }
 
   .category-section {
-    margin-bottom: 32px;
+    margin-bottom: 24px;
+
+    .segment-labels {
+      display: flex;
+      margin-bottom: 6px;
+      font-size: 10.5px;
+      color: #64748b;
+      font-weight: 600;
+
+      .lbl {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    }
 
     .progress-segmented-bar {
-      height: 36px;
+      height: 32px;
       border-radius: 8px;
       overflow: hidden;
       display: flex;
-      margin-bottom: 16px;
+      margin-bottom: 14px;
 
       .segment {
         height: 100%;
         display: flex;
         align-items: center;
-        padding-left: 10px;
+        padding-left: 8px;
 
         .label-pct {
-          font-size: 11px;
-          font-weight: 700;
+          font-size: 10.5px;
+          font-weight: 800;
         }
 
         &.on-way {
-          background-color: #dbeafe;
-          color: #1d4ed8;
+          background-color: #e0e7ff;
+          color: #1e293b;
         }
 
         &.unloading {
@@ -104,25 +124,27 @@
       .row {
         display: flex;
         align-items: center;
-        padding: 8px 0;
-        border-bottom: 1px solid #f1f5f9;
+        padding: 7px 0;
+        border-bottom: 1px solid #f8fafc;
         font-size: 12px;
 
         .cat-name {
           flex: 1;
-          color: #475569;
+          color: #334155;
+          font-weight: 500;
         }
 
         .cat-time {
-          width: 100px;
-          font-weight: 600;
+          width: 90px;
+          font-weight: 700;
           color: #0f172a;
         }
 
         .cat-pct {
-          width: 50px;
+          width: 45px;
           text-align: right;
           color: #64748b;
+          font-weight: 600;
         }
       }
     }
@@ -132,29 +154,31 @@
     position: relative;
 
     .bar-chart-wrapper {
-      height: 160px;
+      height: 140px;
       position: relative;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
       display: flex;
       align-items: flex-end;
 
       .chart-tooltip {
         position: absolute;
-        top: 0;
-        left: 45%;
+        top: -10px;
+        left: 55%;
         transform: translateX(-50%);
         background: #0d0e11;
         color: #ffffff;
-        padding: 8px 12px;
-        border-radius: 8px;
-        font-size: 11px;
+        padding: 6px 12px;
+        border-radius: 6px;
+        font-size: 10.5px;
         z-index: 10;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+        pointer-events: none;
 
         .tooltip-row {
           display: flex;
           justify-content: space-between;
           gap: 12px;
+          line-height: 1.4;
 
           .date, .avg {
             color: #9ca3af;
@@ -172,16 +196,16 @@
         display: flex;
         align-items: flex-end;
         justify-content: space-around;
-        padding-right: 30px;
+        padding-right: 24px;
 
         .bar-group {
           height: 100%;
           display: flex;
           align-items: flex-end;
           cursor: pointer;
-          padding: 0 6px;
+          padding: 0 4px;
           border-radius: 4px;
-          transition: background 0.15s ease;
+          position: relative;
 
           &.active, &:hover {
             background-color: #f1f5f9;
@@ -190,19 +214,22 @@
           .bar-pair {
             display: flex;
             align-items: flex-end;
-            gap: 4px;
+            gap: 2px;
             height: 100%;
 
             .bar {
-              width: 10px;
-              border-radius: 3px 3px 0 0;
+              border-radius: 2px 2px 0 0;
 
               &.avg-bar {
+                width: 14px;
                 background-color: #e2e8f0;
               }
 
               &.work-bar {
+                width: 8px;
                 background-color: #0d0e11;
+                margin-left: -10px;
+                z-index: 2;
               }
             }
           }
@@ -217,7 +244,8 @@
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        font-size: 11px;
+        font-size: 10.5px;
+        font-weight: 600;
         color: #94a3b8;
       }
     }
@@ -227,8 +255,9 @@
       align-items: center;
       justify-content: center;
       gap: 20px;
-      font-size: 11px;
+      font-size: 10.5px;
       color: #64748b;
+      font-weight: 600;
 
       .legend-item {
         display: flex;
@@ -236,8 +265,8 @@
         gap: 6px;
 
         .dot {
-          width: 8px;
-          height: 8px;
+          width: 6px;
+          height: 6px;
           border-radius: 50%;
 
           &.work-dot {

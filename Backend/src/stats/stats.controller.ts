@@ -1,12 +1,12 @@
-import { Controller, Get } from '@nestjs/common';
-import { StatsService, type DriverStats } from './stats.service';
+import { Controller, Get, Query } from '@nestjs/common';
+import { StatsService } from './stats.service';
 
-@Controller('stats')
+@Controller(['stats', 'estadisticas'])
 export class StatsController {
   constructor(private readonly statsService: StatsService) {}
 
   @Get()
-  getDriverStats(): DriverStats {
-    return this.statsService.getDriverStats();
+  async getDriverStats(@Query('driverId') driverId?: string) {
+    return this.statsService.getDriverStats(driverId ? +driverId : undefined);
   }
 }

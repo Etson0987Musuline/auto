@@ -24,72 +24,35 @@
         .driver-name {
           font-size: 16px;
           font-weight: 700;
-          color: var(--text-dark);
+          color: #0f172a;
+          margin: 0 0 2px 0;
         }
 
         .driver-id {
-          font-size: 12px;
-          color: var(--text-muted);
+          font-size: 11px;
+          color: #94a3b8;
+          font-weight: 500;
         }
       }
     }
 
     .header-actions {
       display: flex;
-      gap: 8px;
       align-items: center;
-
-      .action-btn {
-        height: 34px;
-        padding: 0 12px;
-        border-radius: 8px;
-        font-size: 12px;
-        font-weight: 600;
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        border: 1px solid #e5e7eb;
-        background: #ffffff;
-        cursor: pointer;
-        transition: all 0.2s ease;
-
-        svg {
-          width: 14px;
-          height: 14px;
-        }
-
-        &.edit-btn {
-          color: #2563eb;
-          border-color: #bfdbfe;
-          background: #eff6ff;
-
-          &:hover {
-            background: #dbeafe;
-          }
-        }
-
-        &.delete-btn {
-          color: #dc2626;
-          border-color: #fecaca;
-          background: #fef2f2;
-
-          &:hover {
-            background: #fee2e2;
-          }
-        }
-      }
+      gap: 10px;
 
       .icon-btn {
-        width: 34px;
-        height: 34px;
+        width: 36px;
+        height: 36px;
         border-radius: 8px;
         background: #ffffff;
-        border: 1px solid #e5e7eb;
+        border: 1px solid #f1f5f9;
         display: flex;
         align-items: center;
         justify-content: center;
-        color: #4b5563;
-        transition: all 0.2s ease;
+        color: #475569;
+        cursor: pointer;
+        transition: all 0.15s ease;
 
         svg {
           width: 16px;
@@ -97,8 +60,57 @@
         }
 
         &:hover {
-          background-color: #f9fafb;
-          color: var(--text-dark);
+          background-color: #f8fafc;
+          color: #0f172a;
+        }
+      }
+
+      .menu-container {
+        position: relative;
+
+        .dropdown-menu {
+          position: absolute;
+          right: 0;
+          top: 42px;
+          background: #ffffff;
+          border-radius: 12px;
+          box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+          border: 1px solid #e2e8f0;
+          padding: 6px;
+          display: flex;
+          flex-direction: column;
+          gap: 2px;
+          min-width: 220px;
+          z-index: 100;
+          animation: menuFadeIn 0.15s ease;
+
+          .menu-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 500;
+            color: #334155;
+            background: none;
+            border: none;
+            cursor: pointer;
+            text-align: left;
+            transition: background 0.15s ease;
+
+            &:hover {
+              background-color: #f1f5f9;
+              color: #0f172a;
+            }
+
+            &.delete-item {
+              color: #dc2626;
+              &:hover {
+                background-color: #fef2f2;
+              }
+            }
+          }
         }
       }
     }
@@ -106,32 +118,32 @@
 
   .vehicle-card-banner {
     background: #f8fafc;
-    border-radius: 16px;
-    padding: 24px 32px;
+    border-radius: 20px;
+    padding: 32px 36px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     position: relative;
     overflow: hidden;
-    min-height: 200px;
-    border: 1px solid #e2e8f0;
+    min-height: 240px;
+    border: 1px solid #f1f5f9;
 
     .specs-side {
       flex: 1;
-      max-width: 450px;
+      max-width: 420px;
       z-index: 2;
 
       .vehicle-title {
-        font-size: 18px;
-        font-weight: 700;
-        margin-bottom: 20px;
-        color: #1e293b;
+        font-size: 19px;
+        font-weight: 800;
+        margin-bottom: 24px;
+        color: #0f172a;
       }
 
       .specs-grid {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
-        gap: 16px 24px;
+        gap: 18px 32px;
         margin-bottom: 24px;
 
         .spec-item {
@@ -142,12 +154,12 @@
             font-size: 11px;
             color: #94a3b8;
             font-weight: 500;
-            margin-bottom: 2px;
+            margin-bottom: 3px;
           }
 
           .value {
             font-size: 16px;
-            font-weight: 700;
+            font-weight: 800;
             color: #0f172a;
           }
         }
@@ -161,15 +173,15 @@
         .license-tag {
           background: #ffffff;
           border: 1px solid #cbd5e1;
-          border-radius: 6px;
+          border-radius: 5px;
           padding: 4px 8px;
           display: inline-flex;
           flex-direction: column;
           align-items: center;
-          box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+          box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
 
           .state {
-            font-size: 7px;
+            font-size: 6.5px;
             text-transform: uppercase;
             color: #dc2626;
             font-weight: 800;
@@ -177,11 +189,11 @@
           }
 
           .plate-num {
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 800;
-            color: #1e293b;
+            color: #0f172a;
             letter-spacing: 1px;
-            font-family: 'Courier New', monospace;
+            font-family: 'Consolas', 'Courier New', monospace;
           }
         }
 
@@ -191,28 +203,43 @@
           text-decoration: underline;
           text-decoration-style: dashed;
           font-weight: 500;
+          background: none;
+          border: none;
+          cursor: pointer;
+          padding: 0;
 
           &:hover {
-            color: var(--primary-blue);
+            color: #2563eb;
           }
         }
       }
     }
 
     .vehicle-image-side {
-      flex: 1;
+      flex: 1.3;
       display: flex;
       justify-content: flex-end;
       align-items: center;
       z-index: 1;
 
       .van-img {
-        max-width: 380px;
+        max-width: 520px;
         width: 100%;
         height: auto;
         object-fit: contain;
-        filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.08));
+        transform: scale(1.05);
+        filter: drop-shadow(0 12px 20px rgba(0, 0, 0, 0.08));
+        transition: transform 0.3s ease;
+
+        &:hover {
+          transform: scale(1.08);
+        }
       }
     }
   }
+}
+
+@keyframes menuFadeIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
 }

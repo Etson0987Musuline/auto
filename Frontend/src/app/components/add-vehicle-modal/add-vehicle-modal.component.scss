@@ -1,66 +1,126 @@
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background-color: rgba(15, 23, 42, 0.5);
+  background-color: rgba(15, 23, 42, 0.6);
   backdrop-filter: blur(4px);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1000;
+  padding: 16px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  box-sizing: border-box;
+  animation: fadeIn 0.15s ease;
 
   .modal-card {
     background-color: #ffffff;
     border-radius: 16px;
-    width: 440px;
-    max-width: 90vw;
+    width: 480px;
+    max-width: 100%;
+    margin: auto;
     padding: 24px;
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    overflow: hidden;
 
     .modal-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 20px;
+      margin-bottom: 18px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #f1f5f9;
 
-      h3 {
-        font-size: 18px;
-        font-weight: 700;
-        color: #0f172a;
+      .title-with-icon {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        .icon {
+          font-size: 22px;
+        }
+
+        h3 {
+          font-size: 16px;
+          font-weight: 700;
+          color: #0f172a;
+          margin: 0;
+        }
+
+        .subtitle {
+          font-size: 11px;
+          color: #64748b;
+          margin: 2px 0 0 0;
+        }
       }
 
       .close-btn {
-        font-size: 18px;
+        background: none;
+        border: none;
+        font-size: 16px;
         color: #94a3b8;
-        &:hover { color: #0f172a; }
+        cursor: pointer;
+        padding: 4px;
+        line-height: 1;
+
+        &:hover {
+          color: #0f172a;
+        }
       }
     }
 
     .modal-form {
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 12px;
 
       .form-group {
         display: flex;
         flex-direction: column;
-        gap: 6px;
+        gap: 4px;
 
         label {
-          font-size: 12px;
+          font-size: 11.5px;
           font-weight: 600;
-          color: #475569;
+          color: #334155;
+
+          .required {
+            color: #dc2626;
+          }
         }
 
         input, select {
-          padding: 10px 12px;
+          width: 100%;
+          padding: 8px 12px;
           border-radius: 8px;
           border: 1px solid #cbd5e1;
-          font-size: 14px;
+          font-size: 12.5px;
+          color: #0f172a;
           outline: none;
+          background-color: #ffffff;
+          box-sizing: border-box;
+          transition: border-color 0.15s ease, box-shadow 0.15s ease;
+
+          &::placeholder {
+            color: #94a3b8;
+          }
 
           &:focus {
-            border-color: var(--primary-blue);
+            border-color: #2563eb;
+            box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.08);
           }
+
+          &.invalid {
+            border-color: #ef4444;
+            background-color: #fff5f5;
+          }
+        }
+
+        .error-text {
+          font-size: 10.5px;
+          color: #dc2626;
+          font-weight: 500;
         }
       }
 
@@ -68,31 +128,58 @@
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 12px;
+
+        &.three-cols {
+          grid-template-columns: 1fr 1fr 1fr;
+        }
       }
 
       .modal-actions {
         display: flex;
         justify-content: flex-end;
-        gap: 12px;
-        margin-top: 12px;
+        gap: 10px;
+        margin-top: 10px;
+        padding-top: 14px;
+        border-top: 1px solid #f1f5f9;
 
         button {
-          padding: 10px 16px;
+          padding: 9px 16px;
           border-radius: 8px;
-          font-size: 13px;
+          font-size: 12.5px;
           font-weight: 600;
+          cursor: pointer;
+          border: none;
+          transition: background 0.15s ease, transform 0.1s ease;
 
           &.cancel-btn {
             background-color: #f1f5f9;
             color: #475569;
+            border: 1px solid #e2e8f0;
+
+            &:hover {
+              background-color: #e2e8f0;
+            }
           }
 
           &.submit-btn {
-            background-color: var(--primary-blue);
+            background-color: #0d0e11;
             color: #ffffff;
+
+            &:hover {
+              background-color: #1f2937;
+            }
+
+            &:active {
+              transform: scale(0.98);
+            }
           }
         }
       }
     }
   }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.98); }
+  to { opacity: 1; transform: scale(1); }
 }

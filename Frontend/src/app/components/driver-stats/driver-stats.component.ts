@@ -12,8 +12,8 @@ import { DriverStats, ChartPoint } from '../../models/fleet.model';
 export class DriverStatsComponent {
   @Input() stats: DriverStats | null = null;
 
-  activeFilter = 'W'; // W | M | 6M | Y
-  hoveredIndex: number | null = 2; // Default highlight on index 2 (9/12/22) matching image
+  activeFilter = 'S'; // S (Semana) | M (Mes) | 6M (6 Meses) | A (Año)
+  hoveredIndex: number | null = 2; // Default highlight
 
   setFilter(filter: string): void {
     this.activeFilter = filter;

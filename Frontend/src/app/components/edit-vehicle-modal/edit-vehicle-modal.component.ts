@@ -1,38 +1,50 @@
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Vehicle } from '../../models/fleet.model';
 
 @Component({
   selector: 'app-edit-vehicle-modal',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './edit-vehicle-modal.component.html',
   styleUrl: './edit-vehicle-modal.component.scss'
 })
-export class EditVehicleModalComponent implements OnInit {
+export class EditVehicleModalComponent implements OnInit, OnChanges {
   @Input() vehicle!: Vehicle;
   @Output() closeModal = new EventEmitter<void>();
   @Output() updateVehicle = new EventEmitter<{ id: number; data: Partial<Vehicle> }>();
 
-  driverName = '';
-  vehicleModel = '';
-  category = 'VANS';
-  status = 'ON THE WAY';
-  payload = '';
-  loadVolume = '';
-  licensePlate = '';
+  editForm!: FormGroup;
+  submitted = false;
 
   ngOnInit(): void {
-    if (this.vehicle) {
-      this.driverName = this.vehicle.driverName;
-      this.vehicleModel = this.vehicle.vehicleModel;
-      this.category = this.vehicle.category;
-      this.status = this.vehicle.status;
-      this.payload = this.vehicle.payload || '2,885 lbs';
-      this.loadVolume = this.vehicle.loadVolume || '0.55 in³';
-      this.licensePlate = this.vehicle.licensePlate || '6TRJ244';
+    this.initForm();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['vehicle'] && this.editForm) {
+      this.initForm();
     }
+  }
+
+  private initForm(): void {
+    const v = this.vehicle || ({} as Partial<Vehicle>);
+    this.editForm = new FormGroup({
+      driverName: new FormControl(v.driverName || '', [Validators.required, Validators.minLength(3)]),
+      vehicleModel: new FormControl(v.vehicleModel || '', [Validators.required, Validators.minLength(2)]),
+      category: new FormControl(v.category || 'FAVORITOS', [Validators.required]),
+      status: new FormControl(v.status || 'EN CAMINO', [Validators.required]),
+      licensePlate: new FormControl(v.licensePlate || '6TRJ244', [Validators.required]),
+      payload: new FormControl(v.payload || '2,885 lbs (1,308 kg)'),
+      loadVolume: new FormControl(v.loadVolume || '0.55 in³ (5.8 m³)'),
+      loadLength: new FormControl(v.loadLength || '117 in (2.97 m)'),
+      loadWidth: new FormControl(v.loadWidth || '67 in (1.70 m)'),
+    });
+  }
+
+  get f() {
+    return this.editForm.controls;
   }
 
   onClose(): void {
@@ -40,17 +52,25 @@ export class EditVehicleModalComponent implements OnInit {
   }
 
   onSubmit(): void {
-    if (!this.driverName || !this.vehicleModel) return;
+    this.submitted = true;
+
+    if (this.editForm.invalid) {
+      return;
+    }
+
+    const val = this.editForm.value;
     this.updateVehicle.emit({
       id: this.vehicle.id,
       data: {
-        driverName: this.driverName,
-        vehicleModel: this.vehicleModel,
-        category: this.category,
-        status: this.status,
-        payload: this.payload,
-        loadVolume: this.loadVolume,
-        licensePlate: this.licensePlate
+        driverName: val.driverName,
+        vehicleModel: val.vehicleModel,
+        category: val.category,
+        status: val.status,
+        licensePlate: val.licensePlate.toUpperCase(),
+        payload: val.payload,
+        loadVolume: val.loadVolume,
+        loadLength: val.loadLength,
+        loadWidth: val.loadWidth,
       }
     });
   }

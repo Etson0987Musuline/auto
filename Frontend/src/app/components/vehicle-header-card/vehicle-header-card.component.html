@@ -1,65 +1,94 @@
 <div class="driver-header-container" *ngIf="vehicle">
-  <!-- Top Driver Info Bar -->
+  <!-- Barra Superior del Conductor -->
   <div class="top-driver-bar">
     <div class="driver-profile">
       <img [src]="avatarUrl" [alt]="vehicle.driverName" class="driver-avatar">
       <div class="driver-text">
         <h2 class="driver-name">{{ vehicle.driverName }}</h2>
-        <span class="driver-id">ID: {{ vehicle.driverIdCode || '236-542-097' }}</span>
+        <span class="driver-id">ID Conductor: {{ vehicle.driverIdCode || '236-542-097' }}</span>
       </div>
     </div>
 
     <div class="header-actions">
-      <button class="action-btn edit-btn" (click)="onEdit()" title="Edit Driver/Vehicle">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
-        <span>Edit</span>
+      <button class="icon-btn" (click)="onSendMessage()" title="Mensajes">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+        </svg>
+      </button>
+      <button class="icon-btn" (click)="onCallDriver()" title="Llamar Conductor">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+        </svg>
       </button>
 
-      <button class="action-btn delete-btn" (click)="onDelete()" title="Delete Vehicle">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
-        <span>Delete</span>
-      </button>
+      <!-- Menú de Tres Puntos -->
+      <div class="menu-container">
+        <button class="icon-btn" (click)="toggleMenu()" title="Opciones">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <circle cx="12" cy="5" r="2"></circle>
+            <circle cx="12" cy="12" r="2"></circle>
+            <circle cx="12" cy="19" r="2"></circle>
+          </svg>
+        </button>
 
-      <button class="icon-btn" title="Message"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></button>
-      <button class="icon-btn" title="Call"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg></button>
+        <div class="dropdown-menu" *ngIf="isMenuOpen">
+          <button class="menu-item" (click)="onEdit()">
+            <span>✏️ Editar Vehículo / Conductor</span>
+          </button>
+          <button class="menu-item" (click)="openDocs()">
+            <span>📄 Ver Documentos</span>
+          </button>
+          <button class="menu-item delete-item" (click)="onDelete()">
+            <span>🗑️ Eliminar de la Base de Datos</span>
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 
-  <!-- Vehicle Spec Card Banner -->
+  <!-- Ficha de Especificaciones Físicas y la Furgoneta Plateada Grande -->
   <div class="vehicle-card-banner">
     <div class="specs-side">
       <h3 class="vehicle-title">{{ vehicle.vehicleModel }}</h3>
 
       <div class="specs-grid">
         <div class="spec-item">
-          <span class="label">Payload</span>
-          <span class="value">{{ vehicle.payload || '2,885 lbs' }}</span>
+          <span class="label">Capacidad de Carga</span>
+          <span class="value">{{ vehicle.payload || '2,885 lbs (1,308 kg)' }}</span>
         </div>
         <div class="spec-item">
-          <span class="label">Load Volume</span>
-          <span class="value">{{ vehicle.loadVolume || '0.55 in³' }}</span>
+          <span class="label">Volumen de Carga</span>
+          <span class="value">{{ vehicle.loadVolume || '0.55 in³ (5.8 m³)' }}</span>
         </div>
         <div class="spec-item">
-          <span class="label">Load Length</span>
-          <span class="value">{{ vehicle.loadLength || '117 in' }}</span>
+          <span class="label">Largo de Carga</span>
+          <span class="value">{{ vehicle.loadLength || '117 in (2.97 m)' }}</span>
         </div>
         <div class="spec-item">
-          <span class="label">Load Width</span>
-          <span class="value">{{ vehicle.loadWidth || '67 in' }}</span>
+          <span class="label">Ancho de Carga</span>
+          <span class="value">{{ vehicle.loadWidth || '67 in (1.70 m)' }}</span>
         </div>
       </div>
 
       <div class="tag-docs">
-        <div class="license-tag">
-          <span class="state">JUL California 2022</span>
+        <div class="license-tag" title="Placa Oficial">
+          <span class="state">PERÚ OFICIAL</span>
           <span class="plate-num">{{ vehicle.licensePlate || '6TRJ244' }}</span>
         </div>
-        <a class="docs-link" href="#" (click)="$event.preventDefault()">Documents</a>
+        <button class="docs-link" (click)="openDocs()">Documentos</button>
       </div>
     </div>
 
+    <!-- Imagen Grande de la Furgoneta -->
     <div class="vehicle-image-side">
-      <img [src]="vehicleImageUrl" alt="Vehicle Graphic" class="van-img">
+      <img [src]="vehicleImageUrl" alt="Volkswagen Transporter" class="van-img">
     </div>
   </div>
+
+  <!-- Modal de Documentos -->
+  <app-documents-modal
+    *ngIf="isDocsModalOpen"
+    [vehicle]="vehicle"
+    (closeModal)="closeDocs()">
+  </app-documents-modal>
 </div>

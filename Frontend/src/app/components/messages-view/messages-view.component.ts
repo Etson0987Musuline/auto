@@ -10,10 +10,10 @@ import { CommonModule } from '@angular/common';
 })
 export class MessagesViewComponent {
   messages = [
-    { id: 1, sender: 'James Lubin', time: '10:42 AM', preview: 'Package #138 delivered to 270 Rucker Ave successfully.', unread: true },
-    { id: 2, sender: 'Ahmad Mango', time: '09:15 AM', preview: 'Loading completed at warehouse 4. Heading to route.', unread: false },
-    { id: 3, sender: 'Gustavo Torff', time: 'Yesterday', preview: 'Unloading delayed by 15 mins due to dock traffic.', unread: false },
-    { id: 4, sender: 'Talan Dorwart', time: 'Yesterday', preview: 'Waiting for dispatch approval for Mercedes-Benz Metris.', unread: false }
+    { id: 1, sender: 'James Lubin', time: '10:42 AM', preview: 'Paquete #138 entregado exitosamente en Calle Las Camelias 450.', unread: true },
+    { id: 2, sender: 'Ahmad Mango', time: '09:15 AM', preview: 'Carga completada en el Almacén 4. Saliendo hacia ruta asignada.', unread: false },
+    { id: 3, sender: 'Gustavo Torff', time: 'Ayer', preview: 'Descarga con retraso de 15 minutos debido al tráfico en el muelle de carga.', unread: false },
+    { id: 4, sender: 'Talan Dorwart', time: 'Ayer', preview: 'Esperando autorización de despacho para la unidad Mercedes-Benz Metris.', unread: false }
   ];
 
   selectedMessage = this.messages[0];
