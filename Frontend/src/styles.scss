@@ -44,10 +44,36 @@
 
 body, html {
   height: 100%;
+  width: 100%;
+  overflow: hidden;
   font-family: var(--font-family);
   background-color: var(--bg-app);
   color: var(--text-dark);
   -webkit-font-smoothing: antialiased;
+}
+
+/* Ocultar barra de scroll tosca y dejar scroll fluido */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.3);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(148, 163, 184, 0.6);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(148, 163, 184, 0.3) transparent;
 }
 
 button {
@@ -60,3 +86,4 @@ button {
 input {
   font-family: inherit;
 }
+

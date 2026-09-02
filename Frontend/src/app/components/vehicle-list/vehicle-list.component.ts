@@ -21,31 +21,44 @@ export class VehicleListComponent {
   expandedFavorites = true;
   expandedTrucks = true;
   expandedVans = true;
+  expandedOthers = true;
 
   get favorites(): Vehicle[] {
     return this.filterVehicles(
-      this.vehicles.filter(v => 
-        v.category?.toUpperCase() === 'FAVORITOS' || 
-        v.category?.toUpperCase() === 'FAVORITES'
-      )
+      this.vehicles.filter(v => {
+        const cat = (v.category || '').toUpperCase();
+        return cat === 'FAVORITOS' || cat === 'FAVORITES';
+      })
     );
   }
 
   get trucks(): Vehicle[] {
     return this.filterVehicles(
-      this.vehicles.filter(v => 
-        v.category?.toUpperCase() === 'CAMIONES' || 
-        v.category?.toUpperCase() === 'TRUCKS'
-      )
+      this.vehicles.filter(v => {
+        const cat = (v.category || '').toUpperCase();
+        return cat === 'CAMIONES' || cat === 'TRUCKS' || cat.includes('CAMION');
+      })
     );
   }
 
   get vans(): Vehicle[] {
     return this.filterVehicles(
-      this.vehicles.filter(v => 
-        v.category?.toUpperCase() === 'FURGONETAS' || 
-        v.category?.toUpperCase() === 'VANS'
-      )
+      this.vehicles.filter(v => {
+        const cat = (v.category || '').toUpperCase();
+        return cat === 'FURGONETAS' || cat === 'VANS' || cat.includes('FURGONETA') || cat.includes('VAN');
+      })
+    );
+  }
+
+  get otherVehicles(): Vehicle[] {
+    return this.filterVehicles(
+      this.vehicles.filter(v => {
+        const cat = (v.category || '').toUpperCase();
+        const isFav = cat === 'FAVORITOS' || cat === 'FAVORITES';
+        const isTruck = cat === 'CAMIONES' || cat === 'TRUCKS' || cat.includes('CAMION');
+        const isVan = cat === 'FURGONETAS' || cat === 'VANS' || cat.includes('FURGONETA') || cat.includes('VAN');
+        return !isFav && !isTruck && !isVan;
+      })
     );
   }
 
