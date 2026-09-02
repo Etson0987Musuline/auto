@@ -99,12 +99,6 @@ export class FleetService {
     );
   }
 
-  checkDbStatus(): Observable<{ connected: boolean; message: string }> {
-    return this.http.get<{ connected: boolean; message: string }>(`${this.apiUrl}/vehiculos/health/db`).pipe(
-      catchError(() => of({ connected: false, message: 'Backend Offline o DB Desconectada' }))
-    );
-  }
-
   // --- MOCKS DE RESPALDO ---
   private getMockVehicles(): Vehicle[] {
     return [

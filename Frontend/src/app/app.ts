@@ -30,7 +30,7 @@ import { Vehicle, RouteItem, DriverStats } from './models/fleet.model';
     GenericViewComponent,
   ],
   templateUrl: './app.html',
-  styleUrl: './app.css',
+  styleUrl: './app.scss',
 })
 export class App implements OnInit {
   private fleetService = inject(FleetService);
@@ -42,13 +42,13 @@ export class App implements OnInit {
   routes: RouteItem[] = [];
   driverStats: DriverStats | null = null;
 
-  dbStatus = { connected: false, message: 'Verificando conexión con PostgreSQL...' };
   isAddModalOpen = false;
   isEditModalOpen = false;
+  isDeleteModalOpen = false;
+  vehicleToDelete: Vehicle | null = null;
 
   ngOnInit(): void {
     this.loadData();
-    this.checkDb();
   }
 
   loadData(): void {
@@ -63,6 +63,11 @@ export class App implements OnInit {
           const updatedSelected = data.find((v) => v.id === this.selectedVehicle?.id);
           if (updatedSelected) {
             this.selectedVehicle = updatedSelected;
+          } else {
+            this.selectedVehicle = data[0] || null;
+            if (this.selectedVehicle) {
+              this.loadRoutesForVehicle(this.selectedVehicle.id);
+            }
           }
         }
         this.cdr.detectChanges();
@@ -86,16 +91,6 @@ export class App implements OnInit {
     this.fleetService.getRoutes(vehicleId).subscribe({
       next: (r) => {
         this.routes = [...r];
-        this.cdr.detectChanges();
-      },
-      error: () => this.cdr.detectChanges()
-    });
-  }
-
-  checkDb(): void {
-    this.fleetService.checkDbStatus().subscribe({
-      next: (res) => {
-        this.dbStatus = res;
         this.cdr.detectChanges();
       },
       error: () => this.cdr.detectChanges()
@@ -128,6 +123,8 @@ export class App implements OnInit {
   closeModals(): void {
     this.isAddModalOpen = false;
     this.isEditModalOpen = false;
+    this.isDeleteModalOpen = false;
+    this.vehicleToDelete = null;
     this.cdr.detectChanges();
   }
 
@@ -208,31 +205,57 @@ export class App implements OnInit {
   }
 
   onDeleteVehicle(vehicle: Vehicle): void {
-    if (confirm(`¿Está seguro de que desea eliminar la unidad de ${vehicle.driverName} de la base de datos?`)) {
-      this.fleetService.deleteVehicle(vehicle.id).subscribe({
-        next: () => {
-          this.vehicles = this.vehicles.filter((v) => v.id !== vehicle.id);
-          this.selectedVehicle = this.vehicles[0] || null;
-          if (this.selectedVehicle) {
-            this.loadRoutesForVehicle(this.selectedVehicle.id);
+    this.vehicleToDelete = vehicle;
+    this.isDeleteModalOpen = true;
+    this.cdr.detectChanges();
+  }
+
+  cancelDelete(): void {
+    this.isDeleteModalOpen = false;
+    this.vehicleToDelete = null;
+    this.cdr.detectChanges();
+  }
+
+  confirmDeleteVehicle(): void {
+    if (!this.vehicleToDelete) return;
+    const vehicleId = this.vehicleToDelete.id;
+    this.isDeleteModalOpen = false;
+    this.vehicleToDelete = null;
+
+    // Actualización inmediata en UI
+    this.vehicles = this.vehicles.filter((v) => v.id !== vehicleId);
+    if (this.selectedVehicle?.id === vehicleId) {
+      this.selectedVehicle = this.vehicles[0] || null;
+      if (this.selectedVehicle) {
+        this.loadRoutesForVehicle(this.selectedVehicle.id);
+      } else {
+        this.routes = [];
+      }
+    }
+    this.cdr.detectChanges();
+
+    // Eliminar en backend PostgreSQL
+    this.fleetService.deleteVehicle(vehicleId).subscribe({
+      next: () => {
+        // Refrescar sincronizado desde backend PostgreSQL
+        this.fleetService.getVehicles().subscribe((data) => {
+          this.vehicles = [...data];
+          if (this.selectedVehicle && !this.vehicles.some(v => v.id === this.selectedVehicle?.id)) {
+            this.selectedVehicle = this.vehicles[0] || null;
+            if (this.selectedVehicle) {
+              this.loadRoutesForVehicle(this.selectedVehicle.id);
+            } else {
+              this.routes = [];
+            }
           }
           this.cdr.detectChanges();
-
-          // Refrescar sincronizado desde backend PostgreSQL
-          this.fleetService.getVehicles().subscribe((data) => {
-            this.vehicles = [...data];
-            if (this.selectedVehicle && !this.vehicles.some(v => v.id === this.selectedVehicle?.id)) {
-              this.selectedVehicle = this.vehicles[0] || null;
-              if (this.selectedVehicle) {
-                this.loadRoutesForVehicle(this.selectedVehicle.id);
-              }
-            }
-            this.cdr.detectChanges();
-          });
-        },
-        error: () => this.cdr.detectChanges()
-      });
-    }
+        });
+      },
+      error: (err) => {
+        console.error('Error al eliminar vehículo:', err);
+        this.cdr.detectChanges();
+      }
+    });
   }
 
   onAssignNewRoute(newRouteData: Partial<RouteItem>): void {

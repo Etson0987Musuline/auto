@@ -65,6 +65,11 @@ export class VehiclesService implements OnModuleInit {
   }
 
   async remove(id: number): Promise<{ success: boolean; message: string }> {
+    try {
+      await this.driverRepository.update({ vehiculo: { id } }, { vehiculo: null as any });
+    } catch {
+      // Ignorar si no hay conductor vinculado
+    }
     await this.vehicleRepository.delete(id);
     return { success: true, message: 'Vehículo eliminado correctamente de la base de datos' };
   }

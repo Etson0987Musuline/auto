@@ -13,13 +13,6 @@
 
   <!-- 3. Main Workspace Views -->
   <main class="main-content">
-    <!-- Top Database Connection Badge -->
-    <div class="db-status-bar" [class.connected]="dbStatus.connected">
-      <span class="status-dot"></span>
-      <span>{{ dbStatus.message }}</span>
-      <button class="retry-btn" (click)="checkDb()">Actualizar Estado DB</button>
-    </div>
-
     <!-- VIEW 1: Fleet Vehicles Dashboard (Default 'van') -->
     <div class="content-wrapper" *ngIf="activeNav === 'van'">
       <app-vehicle-header-card
@@ -115,4 +108,21 @@
     (closeModal)="closeModals()"
     (updateVehicle)="onUpdateVehicle($event)">
   </app-edit-vehicle-modal>
+
+  <!-- Modal de Confirmación de Eliminación -->
+  <div class="delete-modal-overlay" *ngIf="isDeleteModalOpen && vehicleToDelete" (click)="cancelDelete()">
+    <div class="delete-modal-card" (click)="$event.stopPropagation()">
+      <div class="delete-modal-icon">
+        <span>🗑️</span>
+      </div>
+      <h3>¿Eliminar de la Base de Datos?</h3>
+      <p class="delete-modal-desc">
+        ¿Está seguro de que desea eliminar la unidad <strong>{{ vehicleToDelete.vehicleModel }}</strong> de <strong>{{ vehicleToDelete.driverName }}</strong> (Placa: {{ vehicleToDelete.licensePlate || 'N/A' }}) de la base de datos PostgreSQL?
+      </p>
+      <div class="delete-modal-actions">
+        <button type="button" class="btn-cancel" (click)="cancelDelete()">Cancelar</button>
+        <button type="button" class="btn-delete" (click)="confirmDeleteVehicle()">Sí, Eliminar de la Base de Datos</button>
+      </div>
+    </div>
+  </div>
 </div>
